@@ -13,13 +13,14 @@ class ContentsController < ApplicationController
   end
 
   def add_link
-    site = Link.find_site(params[:external_link])
+    url = params[:external_link].strip
+    site = Link.find_site(url)
     if site.nil?
       redirect_to content_path(@content), alert: 'Сайт для этой ссылки не найден в базе'
       return
     else
       begin
-        @content.links.create(url: params[:external_link], site: site, content: @content)
+        @content.links.create(url: url, site: site, content: @content)
       rescue => e
         redirect_to content_path(@content), alert: e.message
         return

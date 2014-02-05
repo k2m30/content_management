@@ -41,11 +41,12 @@ class LinksController < ApplicationController
   # PATCH/PUT /links/1.json
   def update
     respond_to do |format|
-      if @link.update(link_params)
+      begin
+        @link.update(link_params)
         format.html { redirect_to @link.content, notice: 'Изменено' }
         format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
+      rescue
+        format.html { redirect_to edit_link_path(@link), alert: 'Ошибка' }
         format.json { render json: @link.errors, status: :unprocessable_entity }
       end
     end
