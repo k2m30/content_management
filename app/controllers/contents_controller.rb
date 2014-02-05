@@ -1,5 +1,5 @@
 class ContentsController < ApplicationController
-  before_action :set_content, only: [:show, :edit, :update, :destroy]
+  before_action :set_content, only: [:show, :edit, :update, :destroy, :add_link]
 
   # GET /contents
   # GET /contents.json
@@ -10,6 +10,23 @@ class ContentsController < ApplicationController
   # GET /contents/1
   # GET /contents/1.json
   def show
+  end
+
+  def add_link
+    site = Link.find_site(params[:external_link])
+    if site.nil?
+      redirect_to content_path(@content), alert: 'Сайт для этой ссылки не найден в базе'
+      return
+    else
+      begin
+        @content.links.create(url: params[:external_link], site: site, content: @content)
+      rescue => e
+        redirect_to content_path(@content), alert: e.message
+        return
+      end
+      redirect_to content_path(@content), notice: 'Добавлена'
+    end
+
   end
 
   # GET /contents/new
@@ -28,7 +45,7 @@ class ContentsController < ApplicationController
 
     respond_to do |format|
       if @content.save
-        format.html { redirect_to @content, notice: 'Content was successfully created.' }
+        format.html { redirect_to @content, notice: 'Запись о файле создана.' }
         format.json { render action: 'show', status: :created, location: @content }
       else
         format.html { render action: 'new' }
@@ -42,7 +59,7 @@ class ContentsController < ApplicationController
   def update
     respond_to do |format|
       if @content.update(content_params)
-        format.html { redirect_to @content, notice: 'Content was successfully updated.' }
+        format.html { redirect_to @content, notice: 'Сведения о файле сохранены.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -62,13 +79,13 @@ class ContentsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_content
-      @content = Content.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_content
+    @content = Content.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def content_params
-      params.require(:content).permit(:name, :url)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def content_params
+    params.require(:content).permit(:name, :url)
+  end
 end

@@ -1,0 +1,17 @@
+%h3 Внешние ссылки
+%table.table.table-striped
+  %thead
+    %tr
+      %th Адрес
+      %th Файл
+  %tbody
+    - @links.each do |link|
+      %tr
+        %td= link.url
+        %td= link.content.name
+        %td
+          = link_to 'Изменить', edit_link_path(link), :class => 'btn btn-mini'
+          = link_to 'Удалить', link_path(link), :method => :delete, :data => { :confirm => 'Удалить?' }, :class => 'btn btn-mini btn-danger'
+
+= link_to 'К списку сайтов', sites_path, :class => 'btn'
+= link_to 'К списку файлов', contents_path, :class => 'btn'

@@ -1,0 +1,21 @@
+%h3 Сайты
+%table.table.table-striped
+  %thead
+    %tr
+      %th Название
+      %th Внешние ссылки
+      %th CSS
+      %th Действия
+
+  %tbody
+    - @sites.order(:name).each do |site|
+      %tr
+        %td= link_to site.name, site_path(site)
+        %td
+          = site.links.count
+          = link_to '(просмотр)', links_path(site: site.id), :class => ''
+        %td= site.css
+        %td
+          = link_to 'Изменить', edit_site_path(site), :class => 'btn btn-mini'
+
+= link_to 'Создать сайт', new_site_path, :class => 'btn btn-primary'

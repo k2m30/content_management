@@ -1,0 +1,2 @@
+module OutgraderHelper
+end

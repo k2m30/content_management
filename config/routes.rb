@@ -1,9 +1,14 @@
 ContentManagement::Application.routes.draw do
+  get "outgrader/all"
   resources :sites
 
   resources :links
 
-  resources :contents
+  resources :contents do
+    member do
+      post 'add_link' => 'contents#add_link'
+    end
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

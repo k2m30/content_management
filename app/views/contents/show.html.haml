@@ -1,0 +1,43 @@
+%strong
+  = @content.name
+(
+= @content.url
+)
+= link_to 'Изменить', edit_content_path(@content), :class => 'btn btn-mini'
+= link_to 'Назад', contents_path, :class => 'btn btn-mini'
+
+%hr
+
+= form_tag add_link_content_path, class: 'form-horizontal' do
+  = label_tag 'Добавить ссылку'
+  = text_field_tag :external_link, nil, class: 'span7'
+  = submit_tag 'Добавить', class: 'btn'
+
+
+%hr
+
+%table.table.table-striped.table-condensed
+  %thead
+    %tr
+      %th Внешние ссылки
+      %th Действия
+  %tbody
+    - @content.links.order(:url).each do |link|
+      %tr
+        %td
+          = link.url
+        %td
+          = link_to 'Изменить', edit_link_path(link), class: 'btn btn-mini'
+          = link_to 'Удалить', link_path(link), method: :delete, class: 'btn btn-mini'
+
+%hr
+
+%table.table.table-striped.table-condensed
+  %thead
+    %tr
+      %th Сайты
+  %tbody
+    - @content.sites.order(:name).uniq.each do |site|
+      %tr
+        %td
+          = site.name

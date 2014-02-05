@@ -1,0 +1,16 @@
+= form_for @link, :html => { :class => 'form-horizontal' } do |f|
+  .control-group
+    = f.label 'Адрес', :class => 'control-label'
+    .controls
+      = f.text_field :url, :class => 'text_field span8'
+  -#.control-group
+  -#  = f.label 'Сайт', :class => 'control-label'
+  -#  .controls
+  -#    = f.text_field :site_id, :class => 'text_field'
+  -#.control-group
+  -#  = f.label 'Файл', :class => 'control-label'
+  -#  .controls
+  -#    = f.text_field :content_id, :class => 'text_field'
+  .form-actions
+    = f.submit 'Изменить', :class => 'btn btn-primary'
+    = link_to 'Назад', content_path(@link.content), :class => 'btn'

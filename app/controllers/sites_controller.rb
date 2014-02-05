@@ -28,10 +28,10 @@ class SitesController < ApplicationController
 
     respond_to do |format|
       if @site.save
-        format.html { redirect_to @site, notice: 'Site was successfully created.' }
+        format.html { redirect_to @site, notice: 'Новый сайт создан.' }
         format.json { render action: 'show', status: :created, location: @site }
       else
-        format.html { render action: 'new' }
+        format.html { redirect_to new_site_path, alert: 'Ошибка' }
         format.json { render json: @site.errors, status: :unprocessable_entity }
       end
     end
@@ -42,7 +42,7 @@ class SitesController < ApplicationController
   def update
     respond_to do |format|
       if @site.update(site_params)
-        format.html { redirect_to @site, notice: 'Site was successfully updated.' }
+        format.html { redirect_to @site, notice: 'Сайт обновлен.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

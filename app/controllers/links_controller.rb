@@ -4,7 +4,7 @@ class LinksController < ApplicationController
   # GET /links
   # GET /links.json
   def index
-    @links = Link.all
+    @links = params[:site].nil? ? Link.all : Link.where(site_id: params[:site])
   end
 
   # GET /links/1
@@ -42,7 +42,7 @@ class LinksController < ApplicationController
   def update
     respond_to do |format|
       if @link.update(link_params)
-        format.html { redirect_to @link, notice: 'Link was successfully updated.' }
+        format.html { redirect_to @link.content, notice: 'Изменено' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -54,9 +54,10 @@ class LinksController < ApplicationController
   # DELETE /links/1
   # DELETE /links/1.json
   def destroy
+    content = @link.content
     @link.destroy
     respond_to do |format|
-      format.html { redirect_to links_url }
+      format.html { redirect_to content_path(content) }
       format.json { head :no_content }
     end
   end

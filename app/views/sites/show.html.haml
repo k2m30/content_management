@@ -1,0 +1,14 @@
+%h3= @site.name
+%p
+  %strong CSS
+  %br
+  = @site.css
+%p
+  %strong Код баннера
+  %br
+  = @site.banner
+
+.form-actions
+  = link_to 'Назад', sites_path, :class => 'btn'
+  = link_to 'Изменить', edit_site_path(@site), :class => 'btn'
+  = link_to 'Удалить', site_path(@site), :method => "delete", :data => { :confirm => 'Вы уверены?' }, :class => 'btn btn-danger'
