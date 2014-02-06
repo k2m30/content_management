@@ -6,4 +6,7 @@ class OutgraderController < ApplicationController
     end
     render json: array
   end
+  def stats
+    render text: 'ok'
+  end
 end
