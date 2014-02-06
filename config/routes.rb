@@ -12,5 +12,5 @@ ContentManagement::Application.routes.draw do
   end
 
   root 'contents#index'
-  
+
 end
