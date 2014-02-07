@@ -6,7 +6,22 @@ class OutgraderController < ApplicationController
     end
     render json: array
   end
+
   def stats
     render text: 'ok'
   end
+
+  def get_redirect
+    begin
+      url = params[:url]
+      site = Link.find_site(url)
+      internal_link = site.links.find_by(url: url)
+      href = internal_link.content.url
+
+      render text: 'var href="' << href << '";' << site.banner, status: :ok
+    rescue => e
+      render text: 'error: ' << e.message, status: :unassigned
+    end
+  end
+
 end

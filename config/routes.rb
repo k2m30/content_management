@@ -1,6 +1,7 @@
 ContentManagement::Application.routes.draw do
   get "outgrader/all"
   post "outgrader/stats"
+  get "outgrader/get_redirect"
   resources :sites
 
   resources :links
