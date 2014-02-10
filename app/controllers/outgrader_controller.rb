@@ -1,3 +1,4 @@
+require 'pp'
 class OutgraderController < ApplicationController
   def all
     array = []
@@ -17,6 +18,7 @@ class OutgraderController < ApplicationController
       site = Link.find_site(url)
       internal_link = site.links.find_by(url: url)
       href = internal_link.content.url
+      pp params
 
       render text: 'var href="' << href << '";' << site.banner, status: :ok
     rescue => e
