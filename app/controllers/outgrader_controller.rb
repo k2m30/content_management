@@ -22,7 +22,7 @@ class OutgraderController < ApplicationController
 
       render text: 'var href="' << href << '";' << site.banner, status: :ok
     rescue => e
-      render text: 'error: ' << e.message, status: :unassigned
+      render text: 'error: ' << e.message, status: :ok
     end
   end
 
