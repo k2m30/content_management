@@ -1,5 +1,7 @@
 class LinksController < ApplicationController
+  before_filter :authenticate_user!
   before_action :set_link, only: [:show, :edit, :update, :destroy]
+
 
   # GET /links
   # GET /links.json
@@ -25,7 +27,7 @@ class LinksController < ApplicationController
   # POST /links.json
   def create
     @link = Link.new(link_params)
-
+    @link.url+='/' if not @link.url.end_with?('/')
     respond_to do |format|
       if @link.save
         format.html { redirect_to @link, notice: 'Link was successfully created.' }
@@ -43,6 +45,7 @@ class LinksController < ApplicationController
     respond_to do |format|
       begin
         @link.update(link_params)
+        @link.update(url: @link.url+'/') if not @link.url.end_with?('/')
         format.html { redirect_to @link.content, notice: 'Изменено' }
         format.json { head :no_content }
       rescue

@@ -1,4 +1,5 @@
 ContentManagement::Application.routes.draw do
+  devise_for :users
   get "outgrader/all"
   post "outgrader/stats"
   get "outgrader/get_redirect"

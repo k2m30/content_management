@@ -17,5 +17,6 @@
         %td= site.css
         %td
           = link_to 'Изменить', edit_site_path(site), :class => 'btn btn-mini'
+          = link_to 'Изменить', site_path(site), :class => 'btn btn-mini'
 
 = link_to 'Создать сайт', new_site_path, :class => 'btn btn-primary'

@@ -7,19 +7,22 @@
     =csrf_meta_tags
 
   %body
-    .navbar.navbar-fixed-top
-      .navbar-inner
-        .container
-          %a.btn.btn-navbar(data-target=".nav-collapse" data-toggle="collapse")
-            %span.icon-bar
-            %span.icon-bar
-            %span.icon-bar
-          %a.brand(href="#") Content management
-          .container.nav-collapse
-            %ul.nav
-              %li= link_to 'Файлы', contents_path
-              %li= link_to 'Сайты', sites_path
-              %li= link_to 'Внешние ссылки', links_path
+    - if user_signed_in?
+      .navbar.navbar-fixed-top
+        .navbar-inner
+          .container
+            %a.btn.btn-navbar(data-target=".nav-collapse" data-toggle="collapse")
+              %span.icon-bar
+              %span.icon-bar
+              %span.icon-bar
+            %a.brand(href="#") Content management
+            .container.nav-collapse
+              %ul.nav
+                %li= link_to 'Файлы', contents_path
+                %li= link_to 'Сайты', sites_path
+                %li= link_to 'Внешние ссылки', links_path
+              %ul.nav.pull-right
+                %li= link_to 'Выход', destroy_user_session_path, :method => :delete
     .container
       .content
         .row
@@ -34,6 +37,5 @@
                 %button.close(type="button" data-dismiss="alert")
                   &times;
                 = flash[:alert]
-
             = yield
 

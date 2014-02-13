@@ -15,6 +15,7 @@ class OutgraderController < ApplicationController
   def get_redirect
     begin
       url = params[:url]
+      url+='/' if not url.end_with?('/')
       site = Link.find_site(url)
       internal_link = site.links.find_by(url: url)
       href = internal_link.content.url
