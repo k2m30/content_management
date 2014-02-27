@@ -1,7 +1,8 @@
 require 'pp'
+require 'net/http'
+
 class OutgraderController < ApplicationController
   @@is_started = false
-  @@ip = '93.44.12.15'
   attr_accessor :is_started
   def all
     array = []
@@ -31,9 +32,24 @@ class OutgraderController < ApplicationController
   end
 
   def index
-    @is_started = @@is_started
-    @ip = @@ip
-    @outgrader = self
+    @is_started = Param.first.outgrader_status == 'active' ? true : false
+    Param.create if Param.first.nil?
+    @ip = Param.first.outgrader_ip
+    @port = Param.first.outgrader_port
+  end
+
+  def get_config
+    port = Param.first.outgrader_port
+    ip = Param.first.outgrader_ip
+    version_hash = Hash.new
+    stats_addresses = %w[version state config redirector/config]
+    stats_addresses.each do |address|
+      uri = URI("http://#{ip}:#{port}/#{address}")
+      response = Net::HTTP.get(uri)
+      version_hash.merge!(ActiveSupport::JSON.decode(response))
+    end
+
+    render json: version_hash
   end
 
   def start
@@ -57,7 +73,7 @@ class OutgraderController < ApplicationController
   end
 
   def change_ip
-    @@ip = params[:ip]
+    Param.first.update(outgrader_ip: params[:ip])
     redirect_to outgrader_path, notice:'Адрес изменен'
   end
 

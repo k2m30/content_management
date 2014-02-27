@@ -8,6 +8,7 @@ ContentManagement::Application.routes.draw do
   get 'outgrader/stop' => 'outgrader#stop'
   get 'outgrader/restart' => 'outgrader#restart'
   get 'outgrader/kill' => 'outgrader#kill'
+  get 'outgrader/get_config'
   post 'outgrader/change_ip'
 
   resources :sites

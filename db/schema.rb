@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140210122659) do
+ActiveRecord::Schema.define(version: 20140227143538) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,14 @@ ActiveRecord::Schema.define(version: 20140210122659) do
     t.string   "url"
     t.integer  "site_id"
     t.integer  "content_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "params", force: true do |t|
+    t.string   "outgrader_ip",     default: "127.0.0.1"
+    t.string   "outgrader_port",   default: "8080"
+    t.string   "outgrader_status", default: "stopped"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

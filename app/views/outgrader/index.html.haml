@@ -3,15 +3,23 @@
   Сервис сейчас запущен
 -else
   Сервис остановлен
-%hr
-= form_tag outgrader_change_ip_path, class: 'form-horizontal' do
-  .control-group
-    =label_tag 'Адрес сервера'
-    =text_field_tag :ip, @ip
-    =submit_tag 'Изменить', :class => 'btn'
-
 .form-actions
   = link_to 'Старт', outgrader_start_path, class: 'btn', disabled: @is_started
   = link_to 'Стоп', outgrader_stop_path, class: 'btn', disabled: !@is_started
   = link_to 'Перезапуск', outgrader_restart_path, class: 'btn', disabled: !@is_started
   = link_to 'Принудительная остановка', outgrader_kill_path, class: 'btn', disabled: !@is_started
+
+%hr
+= form_tag outgrader_change_ip_path, class: 'form-horizontal' do
+  .control-group#stats
+.form-actions
+  = link_to 'Изменить настройки', outgrader_start_path, class: 'btn'
+
+= form_tag outgrader_change_ip_path, class: 'form-horizontal' do
+  .control-group
+    =label_tag 'Адрес сервера статистики'
+    =text_field_tag :ip, @ip
+    =label_tag 'Порт'
+    =text_field_tag :port, @port
+  =submit_tag 'Изменить', class: 'btn'
+
