@@ -14,18 +14,18 @@ set -e
 TIMEOUT=${TIMEOUT-60}
 APP_ROOT=/home/lagutko/apps/content_management/current
 PID=$APP_ROOT/tmp/pids/unicorn.pid
-CMD="cd $APP_ROOT; sudo bundle exec unicorn -D -c $APP_ROOT/config/unicorn.rb -E production"
+CMD="cd $APP_ROOT; bundle exec unicorn -D -c $APP_ROOT/config/unicorn.rb -E production"
 AS_USER=lagutko
 set -u
 
 OLD_PIN="$PID.oldbin"
 
 sig () {
-  test -s "$PID" && sudo kill -$1 `cat $PID`
+  test -s "$PID" && kill -$1 `cat $PID`
 }
 
 oldsig () {
-  test -s $OLD_PIN && sudo kill -$1 `cat $OLD_PIN`
+  test -s $OLD_PIN && kill -$1 `cat $OLD_PIN`
 }
 
 run () {
