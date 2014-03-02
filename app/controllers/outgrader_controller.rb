@@ -135,14 +135,27 @@ class OutgraderController < ApplicationController
     if not ENV['USER']=='Mikhail'
       headless = Headless.new
       headless.start
-      profile = Selenium::WebDriver::Firefox::Profile.new
-      profile.proxy = Selenium::WebDriver::Proxy.new :http => "#{@outgrader.outgrader_ip}:8888"
-      browser = Watir::Browser.new :firefox, :profile => profile
-      Link.all.map(&:url).each do |url|
-        browser.goto(url)
-      end
+    end
+    profile = Selenium::WebDriver::Firefox::Profile.new
+    profile.proxy = Selenium::WebDriver::Proxy.new :http => "#{@outgrader.outgrader_ip}:8888" #TODO remove hardcode port
+    browser_proxy = Watir::Browser.new :firefox, :profile => profile
+    browser_straight = Watir::Browser.new :firefox
+    @results = Hash.new
+    Link.all.map(&:url).each do |url|
+      t1 = Time.now
+      browser_proxy.goto(url)
+      t2 = Time.now
+      browser_straight.goto(url)
+      t3 = Time.now
+      div = browser_proxy.div(id: 'outgrader_button')
+      @results[url]=[(t2-t1).round(2),(t3-t2).round(2), div.exists?]
+    end
+    browser_proxy.close
+    browser_straight.close
+    if not ENV['USER']=='Mikhail'
       headless.destroy
     end
+    #@results = {"http://www.kinopoisk.ru/film/5679/"=>[8.46135, 7.246602], "http://films.imhonet.ru/element/189455/"=>[8.393671, 5.261059], "http://www.kinopoisk.ru/film/77331/"=>[4.995837, 33.41228]}
     @hash = ENV.to_hash
     #redirect_to outgrader_path, notice: 'Тест запущен'
   end

@@ -1,1 +1,30 @@
-=@hash
+%table.table.table-bordered
+  %thead
+    %th
+      URL
+    %th
+      Баннер
+    %th
+      С прокси
+    %th
+      Без прокси
+    %th
+      Разница, с
+    %th
+      ='%'
+  %tbody
+    -@results.keys.each do |key|
+      %tr
+      %td
+        =key
+      %td
+        =@results[key][2] ? '+' : 'x'
+      %td
+        =@results[key][0]
+      %td
+        =@results[key][1]
+      %td
+        =(@results[key][0]-@results[key][1]).round(2)
+      %td
+        =((@results[key][0]-@results[key][1])/@results[key][1]).round(2)*100
+%hr
