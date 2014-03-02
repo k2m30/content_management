@@ -47,6 +47,7 @@ end
 
 gem 'faker'
 gem 'watir-webdriver'
+gem 'headless'
 
 gem 'devise'
 

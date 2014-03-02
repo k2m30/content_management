@@ -2,6 +2,7 @@ require 'pp'
 require 'net/http'
 require 'watir-webdriver'
 require 'date'
+require 'headless'
 
 class OutgraderController < ApplicationController
   @@is_started = false
@@ -131,14 +132,19 @@ class OutgraderController < ApplicationController
   end
 
   def test
-    profile = Selenium::WebDriver::Firefox::Profile.new
-    profile.proxy = Selenium::WebDriver::Proxy.new :http => "#{@outgrader.outgrader_ip}:8888"
-    browser = Watir::Browser.new :firefox, :profile => profile
-    Link.all.map(&:url).each do |url|
-      browser.goto(url)
+    if not ENV['USER']=='Mikhail'
+      headless = Headless.new
+      headless.start
+      profile = Selenium::WebDriver::Firefox::Profile.new
+      profile.proxy = Selenium::WebDriver::Proxy.new :http => "#{@outgrader.outgrader_ip}:8888"
+      browser = Watir::Browser.new :firefox, :profile => profile
+      Link.all.map(&:url).each do |url|
+        browser.goto(url)
+      end
+      headless.destroy
     end
-
-    redirect_to outgrader_path, notice: 'Тест запущен'
+    @hash = ENV.to_hash
+    #redirect_to outgrader_path, notice: 'Тест запущен'
   end
 
 end
