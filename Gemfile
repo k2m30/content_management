@@ -46,6 +46,7 @@ end
 # gem 'debugger', group: [:development, :test]
 
 gem 'faker'
+gem 'watir-webdriver'
 
 gem 'devise'
 

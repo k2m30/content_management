@@ -1,25 +1,56 @@
 %h3 Статистика
--if @is_started
-  Сервис сейчас запущен
--else
-  Сервис остановлен
+
+-is_started = @state_hash['state'] == 'ACTIVE'? true : false
+
 .form-actions
-  = link_to 'Старт', outgrader_start_path, class: 'btn', disabled: @is_started
-  = link_to 'Стоп', outgrader_stop_path, class: 'btn', disabled: !@is_started
-  = link_to 'Перезапуск', outgrader_restart_path, class: 'btn', disabled: !@is_started
-  = link_to 'Принудительная остановка', outgrader_kill_path, class: 'btn', disabled: !@is_started
+  = link_to 'Старт', outgrader_start_path, class: 'btn', disabled: is_started
+  = link_to 'Стоп', outgrader_stop_path, class: 'btn', disabled: !is_started
+  = link_to 'Перезапуск', outgrader_restart_path, class: 'btn', disabled: !is_started
+  = link_to 'Принудительная остановка', outgrader_kill_path, class: 'btn', disabled: !is_started
 
 %hr
-= form_tag outgrader_change_ip_path, class: 'form-horizontal' do
-  .control-group#stats
-.form-actions
-  = link_to 'Изменить настройки', outgrader_start_path, class: 'btn'
 
-= form_tag outgrader_change_ip_path, class: 'form-horizontal' do
+%table.table.table-bordered
+  %thead
+    -@state_hash.keys.each do |key|
+      %th
+        =key
+  %tbody
+    %tr
+      -@state_hash.keys.each do |key|
+        %td
+          =@state_hash[key]
+%hr
+
+= form_tag outgrader_change_config_path, class: 'form-horizontal' do
+  -@config_hash.keys.each do |key|
+    .control-group
+      =label_tag key, key, class: 'control-label'
+      .span1
+      .controls
+        =text_field_tag key, @config_hash[key], class: 'text_field input-xxlarge'
+  .form-actions
+    .span1
+    =submit_tag 'Изменить настройки', class: 'btn'
+%hr
+
+= form_tag outgrader_outgrader_change_ip_path, class: 'form-horizontal' do
   .control-group
-    =label_tag 'Адрес сервера статистики'
-    =text_field_tag :ip, @ip
-    =label_tag 'Порт'
-    =text_field_tag :port, @port
-  =submit_tag 'Изменить', class: 'btn'
+    =label_tag 'Сервер статистики', nil, class: 'control-label'
+    .controls
+      =text_field_tag :ip, @outgrader.outgrader_ip, class: 'text_field'
+  .control-group
+    =label_tag 'Порт', nil, class: 'control-label'
+    .controls
+      =text_field_tag :port, @outgrader.outgrader_port, class: 'text_field'
+  .form-actions
+    =submit_tag 'Изменить', class: 'btn'
+%hr
 
+= form_tag outgrader_redirector_change_ip_path, class: 'form-horizontal' do
+  .control-group
+    =label_tag 'Сервер перенаправления', nil, class: 'control-label'
+    .controls
+      =text_field_tag :ip, @outgrader.redirector_ip, class: 'text_field'
+  .form-actions
+    =submit_tag 'Изменить', class: 'btn'

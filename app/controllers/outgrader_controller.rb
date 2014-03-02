@@ -1,19 +1,26 @@
 require 'pp'
 require 'net/http'
+require 'watir-webdriver'
+require 'date'
 
 class OutgraderController < ApplicationController
   @@is_started = false
   attr_accessor :is_started
-  def all
-    array = []
-    Site.all.each do |site|
-      array << {site: site.name, code: site.banner, css: site.css, links: site.links.pluck(:url)}
-    end
-    render json: array
-  end
 
-  def stats
-    render text: 'ok'
+  #def all
+  #  array = []
+  #  Site.all.each do |site|
+  #    array << {site: site.name, code: site.banner, css: site.css, links: site.links.pluck(:url)}
+  #  end
+  #  render json: array
+  #end
+
+  #def stats
+  #  render text: 'ok'
+  #end
+  def initialize
+    @outgrader = Param.first || Param.create
+    super
   end
 
   def get_redirect
@@ -32,49 +39,106 @@ class OutgraderController < ApplicationController
   end
 
   def index
-    @is_started = Param.first.outgrader_status == 'active' ? true : false
-    Param.create if Param.first.nil?
-    @ip = Param.first.outgrader_ip
-    @port = Param.first.outgrader_port
+    begin
+      @config_hash = get_action(:config).merge(get_action(:'redirector/config'))
+      @state_hash = get_action(:state).merge(get_action(:version))
+
+      @state_hash['startDate'] = pluck_date(@state_hash['startDate'])
+      @state_hash['activationDate'] = pluck_date(@state_hash['activationDate'])
+
+      @outgrader.update(outgrader_status: @state_hash[:state])
+    rescue
+      @config_hash = @state_hash = Hash.new
+      flash[:alert]= 'Сервер недоступен'
+    end
   end
 
-  def get_config
-    port = Param.first.outgrader_port
-    ip = Param.first.outgrader_ip
-    version_hash = Hash.new
-    stats_addresses = %w[version state config redirector/config]
-    stats_addresses.each do |address|
-      uri = URI("http://#{ip}:#{port}/#{address}")
-      response = Net::HTTP.get(uri)
-      version_hash.merge!(ActiveSupport::JSON.decode(response))
-    end
+  def pluck_date(timestamp)
+    date = timestamp.to_s
+    date = date[0..date.length-4]
+    return DateTime.strptime(date, '%s').strftime('%d/%m/%Y %T')
+  end
 
-    render json: version_hash
+  def get_action(action)
+    port = @outgrader.outgrader_port
+    ip = @outgrader.outgrader_ip
+    uri = URI("http://#{ip}:#{port}/#{action}")
+    response = Net::HTTP.get uri
+
+    return ActiveSupport::JSON.decode response
+  end
+
+  def change_config
+    begin
+      port = @outgrader.outgrader_port
+      ip = @outgrader.outgrader_ip
+
+      uri = URI("http://#{ip}:#{port}/#{:change_config}")
+      Net::HTTP.post_form uri, params
+      dsf
+      #rescue
+      #  redirect_to outgrader_path, alert: 'Сервер не отвечает'
+      #  return
+    end
+    redirect_to outgrader_path, notice: 'Настройки изменены'
   end
 
   def start
-    @@is_started = true
-    redirect_to outgrader_path, notice:'Outgrader запущен'
+    put_action('start')
+    redirect_to outgrader_path, notice: 'Outgrader запущен'
   end
 
   def stop
-    @@is_started = false
-    redirect_to outgrader_path, notice:'Outgrader остановлен'
+    put_action('stop')
+    redirect_to outgrader_path, notice: 'Outgrader остановлен'
   end
 
   def restart
-    @@is_started = true
-    redirect_to outgrader_path, notice:'Outgrader перезапущен'
+    put_action('restart')
+    redirect_to outgrader_path, notice: 'Outgrader перезапущен'
   end
 
   def kill
-    @@is_started = false
-    redirect_to outgrader_path, notice:'Outgrader принудительно остановлен'
+    put_action('kill')
+    redirect_to outgrader_path, notice: 'Outgrader принудительно остановлен'
   end
 
-  def change_ip
-    Param.first.update(outgrader_ip: params[:ip])
-    redirect_to outgrader_path, notice:'Адрес изменен'
+  def put_action(action)
+    begin
+      port = @outgrader.outgrader_port
+      ip = @outgrader.outgrader_ip
+      Net::HTTP.get(URI("http://#{ip}:#{port}/#{action}"))
+    rescue
+    end
+  end
+
+  def outgrader_change_ip
+    @outgrader.update(outgrader_ip: params[:ip].gsub('http://', ''), outgrader_port: params[:port])
+    redirect_to outgrader_path, notice: 'Адрес изменен'
+  end
+
+  def redirector_change_ip
+    begin
+      @outgrader.update(redirector_ip: params[:ip].gsub('http://', ''))
+      redirect_js = "$.ajax({url: \"http://#{@outgrader.redirector_ip}/outgrader/get_redirect.js\?url=\" + location.href, dataType: \"script\"});"
+      f = File.open('./public/redirector.js', 'w+')
+      f.write(redirect_js)
+      f.close
+    rescue
+      redirect_to outgrader_path, alert: 'Ошибка изменения адреса'
+    end
+    redirect_to outgrader_path, notice: 'Адрес изменен'
+  end
+
+  def test
+    profile = Selenium::WebDriver::Firefox::Profile.new
+    profile.proxy = Selenium::WebDriver::Proxy.new :http => "#{@outgrader.outgrader_ip}:8888"
+    browser = Watir::Browser.new :firefox, :profile => profile
+    Link.all.map(&:url).each do |url|
+      browser.goto(url)
+    end
+
+    redirect_to outgrader_path, notice: 'Тест запущен'
   end
 
 end
