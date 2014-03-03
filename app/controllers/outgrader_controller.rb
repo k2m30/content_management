@@ -76,7 +76,6 @@ class OutgraderController < ApplicationController
 
       uri = URI("http://#{ip}:#{port}/#{:change_config}")
       Net::HTTP.post_form uri, params
-      dsf
       #rescue
       #  redirect_to outgrader_path, alert: 'Сервер не отвечает'
       #  return
