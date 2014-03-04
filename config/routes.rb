@@ -1,18 +1,18 @@
 ContentManagement::Application.routes.draw do
   devise_for :users
-  get "outgrader/all"
-  post "outgrader/stats"
-  get "outgrader/get_redirect"
+
+  get 'outgrader/get_redirect'
   get 'outgrader' => 'outgrader#index'
-  get 'outgrader/start' => 'outgrader#start'
-  get 'outgrader/stop' => 'outgrader#stop'
-  get 'outgrader/restart' => 'outgrader#restart'
-  get 'outgrader/kill' => 'outgrader#kill'
+  get 'outgrader/start'
+  get 'outgrader/stop'
+  get 'outgrader/restart'
+  get 'outgrader/kill'
   get 'outgrader/get_config'
   get 'outgrader/test'
   post 'outgrader/outgrader_change_ip'
   post 'outgrader/redirector_change_ip'
   post 'outgrader/change_config'
+  post 'outgrader/send_click'
 
   resources :sites
 

@@ -5,23 +5,15 @@ require 'date'
 require 'headless'
 
 class OutgraderController < ApplicationController
-  @@is_started = false
   attr_accessor :is_started
 
-  #def all
-  #  array = []
-  #  Site.all.each do |site|
-  #    array << {site: site.name, code: site.banner, css: site.css, links: site.links.pluck(:url)}
-  #  end
-  #  render json: array
-  #end
-
-  #def stats
-  #  render text: 'ok'
-  #end
   def initialize
     @outgrader = Param.first || Param.create
     super
+  end
+
+  def send_click
+    render text: "sent from #{params}", status: :ok
   end
 
   def get_redirect
@@ -31,9 +23,8 @@ class OutgraderController < ApplicationController
       site = Link.find_site(url)
       internal_link = site.links.find_by(url: url)
       href = internal_link.content.url
-      pp params
 
-      render text: 'var href="' << href << '";' << site.banner, status: :ok
+      render text: "var outgrader_url=\"#{Param.first.redirector_ip}\"; var href= #{href}; #{site.banner}", status: :ok
     rescue => e
       render text: 'error: ' << e.message, status: :ok
     end
