@@ -5,7 +5,7 @@ require 'date'
 require 'headless'
 
 class OutgraderController < ApplicationController
-  attr_accessor :is_started
+  skip_before_filter  :verify_authenticity_token, only: [:send_click]
 
   def initialize
     @outgrader = Param.first || Param.create
@@ -13,7 +13,7 @@ class OutgraderController < ApplicationController
   end
 
   def send_click
-    render text: "sent from #{params}", status: :ok
+    render text: "sent from #{params}",status: :ok
   end
 
   def get_redirect

@@ -39,20 +39,13 @@ function sendClick(url) {
     if (!httpRequest) {
         return false;
     }
-    httpRequest.onreadystatechange = alertContents;
-//    httpRequest.open("POST", 'http://' + outgrader_url + "/outgrader/send_click", true);
-    httpRequest.open("GET", 'http://' + outgrader_url + "/outgrader/send_click");
-    httpRequest.send('url=' + url);
+//        httpRequest.open("GET", 'http://' + outgrader_url + "/outgrader/send_click");
+
+    httpRequest.open("POST", "http://37.230.117.50/outgrader/send_click.js?url=rtt", true);
+    httpRequest.onreadystatechange = function () {
+        if (httpRequest.readyState != 4 || httpRequest.status != 200) return;
+        alert("Success: " + httpRequest.responseText);
+    };
+    httpRequest.send("banana=yellow");
     return true;
 }
-
-function alertContents() {
-    if (httpRequest.readyState === 4) {
-        if (httpRequest.status === 200) {
-            alert(httpRequest.responseText);
-        } else {
-            alert('There was a problem with the request.');
-        }
-    }
-}
-
