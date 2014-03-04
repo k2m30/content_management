@@ -13,6 +13,7 @@ ContentManagement::Application.routes.draw do
   post 'outgrader/redirector_change_ip'
   post 'outgrader/change_config'
   post 'outgrader/send_click'
+  get 'outgrader/send_click'
 
   resources :sites
 
