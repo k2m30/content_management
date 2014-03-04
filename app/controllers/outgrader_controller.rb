@@ -24,7 +24,7 @@ class OutgraderController < ApplicationController
       internal_link = site.links.find_by(url: url)
       href = internal_link.content.url
 
-      render text: "var outgrader_url=\"#{Param.first.redirector_ip}\"; var href= #{href}; #{site.banner}", status: :ok
+      render text: "var outgrader_url=\"#{Param.first.redirector_ip}\"; var href=\"#{href}\"; #{site.banner}", status: :ok
     rescue => e
       render text: 'error: ' << e.message, status: :ok
     end
