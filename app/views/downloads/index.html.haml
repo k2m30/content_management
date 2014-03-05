@@ -11,8 +11,8 @@
     -@downloads.each do |download|
       %tr
         %td= download.link.content.name
-        %td= download.link.site.name
-        %td= download.time
+        %td{title: download.link.url, class: 'tt'}= download.link.site.name
+        %td= download.time.to_formatted_s(:short)
         %td= download.remote_ip
 
 = link_to 'К списку сайтов', sites_path, :class => 'btn'
