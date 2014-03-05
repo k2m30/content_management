@@ -13,8 +13,9 @@ class OutgraderController < ApplicationController
   end
 
   def send_click
+
     response.headers['Access-Control-Allow-Origin'] = '*'
-    render text: "sent from #{params}",status: :ok
+    render text: "sent from #{params}:#{@_headers}, #{@_request}, #{@_env}",status: :ok
   end
 
   def get_redirect

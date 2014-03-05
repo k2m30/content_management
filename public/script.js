@@ -42,7 +42,7 @@ function sendClick(url) {
     httpRequest.open("POST", 'http://' + outgrader_url + "/outgrader/send_click");
     httpRequest.onreadystatechange = function () {
         if (httpRequest.readyState != 4 || httpRequest.status != 200) return;
-        alert("Success: " + httpRequest.responseText);
+        console.log("Success: " + httpRequest.responseText);
     };
     httpRequest.send("banana=yellow");
     return true;
