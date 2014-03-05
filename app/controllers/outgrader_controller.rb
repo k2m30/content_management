@@ -13,9 +13,12 @@ class OutgraderController < ApplicationController
   end
 
   def send_click
+    params[:url] = 'http://www.kinopoisk.ru/film/77331/' if params[:url].nil?
+    link = Link.find_by(url: params[:url])
+    Download.create(remote_ip: @_env["REMOTE_ADDR"], time: DateTime.now, link: link) unless link.nil?
 
     response.headers['Access-Control-Allow-Origin'] = '*'
-    render text: "sent from #{params}:#{@_headers}, #{@_request}, #{@_env}",status: :ok
+    render text: "sent from #{@_env["REMOTE_ADDR"]}",status: :ok
   end
 
   def get_redirect

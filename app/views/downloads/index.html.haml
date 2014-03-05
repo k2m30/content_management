@@ -1,0 +1,19 @@
+%h3 Загрузки
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th Название
+      %th Сайт
+      %th Дата
+      %th IP
+  %tbody
+    -@downloads.each do |download|
+      %tr
+        %td= download.link.content.name
+        %td= download.link.site.name
+        %td= download.time
+        %td= download.remote_ip
+
+= link_to 'К списку сайтов', sites_path, :class => 'btn'
+= link_to 'К списку файлов', contents_path, :class => 'btn'

@@ -39,11 +39,11 @@ function sendClick(url) {
     if (!httpRequest) {
         return false;
     }
-    httpRequest.open("POST", 'http://' + outgrader_url + "/outgrader/send_click");
+    httpRequest.open("POST", 'http://' + outgrader_url + "/outgrader/send_click.json?url=" + url);
     httpRequest.onreadystatechange = function () {
         if (httpRequest.readyState != 4 || httpRequest.status != 200) return;
         console.log("Success: " + httpRequest.responseText);
     };
-    httpRequest.send("banana=yellow");
+    httpRequest.send();
     return true;
 }

@@ -1,4 +1,7 @@
 ContentManagement::Application.routes.draw do
+  get "downloads/index"
+  get "dowload/index"
+  get "downloads_controller/index"
   devise_for :users
 
   get 'outgrader/get_redirect'
@@ -14,6 +17,8 @@ ContentManagement::Application.routes.draw do
   post 'outgrader/change_config'
   post 'outgrader/send_click'
   get 'outgrader/send_click'
+
+  get 'downloads' => 'downloads#index'
 
   resources :sites
 
