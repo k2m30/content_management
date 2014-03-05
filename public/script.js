@@ -39,9 +39,7 @@ function sendClick(url) {
     if (!httpRequest) {
         return false;
     }
-//        httpRequest.open("GET", 'http://' + outgrader_url + "/outgrader/send_click");
-
-    httpRequest.open("POST", "http://37.230.117.50/outgrader/send_click.js?url=rtt", true);
+    httpRequest.open("POST", 'http://' + outgrader_url + "/outgrader/send_click");
     httpRequest.onreadystatechange = function () {
         if (httpRequest.readyState != 4 || httpRequest.status != 200) return;
         alert("Success: " + httpRequest.responseText);
