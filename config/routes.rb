@@ -1,7 +1,6 @@
 ContentManagement::Application.routes.draw do
-  get "downloads/index"
-  get "dowload/index"
-  get "downloads_controller/index"
+  get "stats/choose_dates"
+  get "stats/results"
   devise_for :users
 
   get 'outgrader/get_redirect'

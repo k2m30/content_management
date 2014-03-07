@@ -1,0 +1,20 @@
+%h3 Статистика посещений
+=@begin_date
+=@end_date
+
+%table.table.table-condensed
+  %thead
+    -@visits[0].keys.reverse.each do |key|
+      %th{style: 'width: 100px; word-break: break-all;'}
+        =key
+  %tbody
+    -@visits.each do |visit|
+      %tr
+        -visit.keys.reverse.each do |key|
+          %td
+            -if key == 'periodTimestamp'
+              =DateTime.strptime(visit[key].to_s, '%Q').strftime('%d/%m %H:%M')
+            -else
+              =visit[key]
+%hr
+

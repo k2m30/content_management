@@ -21,13 +21,13 @@
                 %li= link_to 'Файлы', contents_path
                 %li= link_to 'Сайты', sites_path
                 %li= link_to 'Внешние ссылки', links_path
-                %li= link_to 'Статистика', downloads_index_path
+                %li= link_to 'Статистика', downloads_path
               %ul.nav.pull-right
                 %li= link_to 'Выход', destroy_user_session_path, :method => :delete
     .container
       .content
         .row
-          .span9
+          .span12
             - if !flash[:notice].nil?
               .alert.alert-success
                 %button.close(type="button" data-dismiss="alert")

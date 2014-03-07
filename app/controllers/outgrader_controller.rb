@@ -42,6 +42,7 @@ class OutgraderController < ApplicationController
 
       @state_hash['startDate'] = pluck_date(@state_hash['startDate'])
       @state_hash['activationDate'] = pluck_date(@state_hash['activationDate'])
+      @state_hash['buildDate'] = pluck_date(@state_hash['buildDate'])
 
       @outgrader.update(outgrader_status: @state_hash[:state])
     rescue
@@ -51,9 +52,7 @@ class OutgraderController < ApplicationController
   end
 
   def pluck_date(timestamp)
-    date = timestamp.to_s
-    date = date[0..date.length-4]
-    return DateTime.strptime(date, '%s').strftime('%d/%m/%Y %T')
+    return DateTime.strptime(timestamp.to_s, '%Q').strftime('%d/%m/%Y %T')
   end
 
   def get_action(action)

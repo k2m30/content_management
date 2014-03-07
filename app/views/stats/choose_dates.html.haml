@@ -1,0 +1,12 @@
+%h3 Выбор дат
+= form_tag stats_results_path, method: :get, class: 'form-horizontal' do
+  .control-group
+    =label_tag 'От', nil, class: 'control-label'
+    .controls
+      =time_field_tag :from, @begin_date
+  .control-group
+    =label_tag 'До', nil, class: 'control-label'
+    .controls
+      =datetime_field_tag :to, @end_date
+  .form-actions
+    =submit_tag 'Получить статистику', class: 'btn'
