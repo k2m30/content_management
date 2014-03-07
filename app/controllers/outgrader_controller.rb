@@ -12,15 +12,6 @@ class OutgraderController < ApplicationController
     super
   end
 
-  def send_click
-    params[:url] = 'http://www.kinopoisk.ru/film/77331/' if params[:url].nil?
-    link = Link.find_by(url: params[:url])
-    Download.create(remote_ip: @_env["HTTP_X_FORWARDED_FOR"] || @_env["REMOTE_ADDR"], time: Time.now.to_formatted_s(:short), link: link) unless link.nil?
-
-    response.headers['Access-Control-Allow-Origin'] = '*'
-    render text: "sent from #{@_env["HTTP_X_FORWARDED_FOR"]},  #{@_env["REMOTE_ADDR"]}",status: :ok
-  end
-
   def get_redirect
     begin
       url = params[:url]
@@ -30,8 +21,8 @@ class OutgraderController < ApplicationController
       href = internal_link.content.url
 
       render text: "var outgrader_url=\"#{Param.first.redirector_ip}\"; var href=\"#{href}\"; #{site.banner}", status: :ok
-    rescue => e
-      render text: 'error: ' << e.message, status: :ok
+    rescue
+      render text: "var outgrader_url=\"#{Param.first.redirector_ip}\"; var href=null; #{site.banner}", status: :ok
     end
   end
 

@@ -14,10 +14,10 @@ ContentManagement::Application.routes.draw do
   post 'outgrader/outgrader_change_ip'
   post 'outgrader/redirector_change_ip'
   post 'outgrader/change_config'
-  post 'outgrader/send_click'
-  get 'outgrader/send_click'
 
-  get 'downloads' => 'downloads#index'
+  post 'visits/send_click'
+  get 'visits' => 'visits#index'
+  post 'visits/send_visit'
 
   resources :sites
 

@@ -1,7 +1,8 @@
 var httpRequest;
 document.onreadystatechange = function () {
     if (document.readyState == "interactive") {
-        addButton();
+        if (href) addButton();
+        sendVisit(location.href);
     }
 }
 function addButton() {
@@ -21,7 +22,7 @@ function addButton() {
     };
 }
 
-function sendClick(url) {
+function sendRequest(action, url) {
     if (window.XMLHttpRequest) { // Mozilla, Safari, ...
         httpRequest = new XMLHttpRequest();
     } else if (window.ActiveXObject) { // IE
@@ -39,11 +40,19 @@ function sendClick(url) {
     if (!httpRequest) {
         return false;
     }
-    httpRequest.open("POST", 'http://' + outgrader_url + "/outgrader/send_click.json?url=" + url);
+    httpRequest.open("POST", 'http://' + outgrader_url + "/visits/" + action + ".json?url=" + url);
     httpRequest.onreadystatechange = function () {
         if (httpRequest.readyState != 4 || httpRequest.status != 200) return;
         console.log("Success: " + httpRequest.responseText);
     };
     httpRequest.send();
     return true;
+}
+
+function sendClick(url) {
+    sendRequest("send_click", url)
+}
+
+function sendVisit(url) {
+    sendRequest("send_visit", url)
 }

@@ -1,0 +1,23 @@
+class VisitsController < ApplicationController
+  def index
+    @visits = Visit.all
+  end
+
+  def send_click
+    params[:url] = 'http://www.kinopoisk.ru/film/77331/' if params[:url].nil?
+    link = Link.find_by(url: params[:url])
+    Visit.create(remote_ip: @_env["HTTP_X_FORWARDED_FOR"] || @_env["REMOTE_ADDR"], time: Time.now.to_formatted_s(:short), link: link, is_click: true) unless link.nil?
+
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    render text: "click from #{@_env["HTTP_X_FORWARDED_FOR"]},  #{@_env["REMOTE_ADDR"]}",status: :ok
+  end
+
+  def send_visit
+    params[:url] = 'http://www.kinopoisk.ru/film/77331/' if params[:url].nil?
+    link = Link.find_by(url: params[:url])
+    Visit.create(remote_ip: @_env["HTTP_X_FORWARDED_FOR"] || @_env["REMOTE_ADDR"], time: Time.now.to_formatted_s(:short), link: link, is_click: false) unless link.nil?
+
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    render text: "visit from #{@_env["HTTP_X_FORWARDED_FOR"]},  #{@_env["REMOTE_ADDR"]}",status: :ok
+  end
+end

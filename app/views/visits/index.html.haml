@@ -8,12 +8,12 @@
       %th Дата
       %th IP
   %tbody
-    -@downloads.each do |download|
-      %tr
-        %td= download.link.content.name
-        %td{title: download.link.url, class: 'tt'}= download.link.site.name
-        %td= download.time.to_formatted_s(:short)
-        %td= download.remote_ip
+    -@visits.each do |visit|
+      %tr{class: visit.is_click? ? 'success' : ''}
+        %td= visit.link.content.name
+        %td{title: visit.link.url, class: 'tt'}= visit.link.site.name
+        %td= visit.time.to_formatted_s(:short)
+        %td= visit.remote_ip
 
 = link_to 'К списку сайтов', sites_path, class: 'btn'
 = link_to 'К списку файлов', contents_path, class: 'btn'
