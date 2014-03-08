@@ -23,6 +23,7 @@ function addButton() {
 }
 
 function sendRequest(action, url) {
+    if (!url) url = "";
     if (window.XMLHttpRequest) { // Mozilla, Safari, ...
         httpRequest = new XMLHttpRequest();
     } else if (window.ActiveXObject) { // IE
@@ -40,12 +41,16 @@ function sendRequest(action, url) {
     if (!httpRequest) {
         return false;
     }
+console.log('begin');
     httpRequest.open("POST", 'http://' + outgrader_url + "/visits/" + action + ".json?url=" + url);
+    console.log('created');
     httpRequest.onreadystatechange = function () {
         if (httpRequest.readyState != 4 || httpRequest.status != 200) return;
         console.log("Success: " + httpRequest.responseText);
     };
+    console.log('set ');
     httpRequest.send();
+    console.log('send');
     return true;
 }
 

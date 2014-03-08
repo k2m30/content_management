@@ -15,6 +15,7 @@ ContentManagement::Application.routes.draw do
   post 'outgrader/redirector_change_ip'
   post 'outgrader/change_config'
 
+  get 'visits/send_click'
   post 'visits/send_click'
   get 'visits' => 'visits#index'
   post 'visits/send_visit'
