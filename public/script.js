@@ -40,16 +40,13 @@ function sendRequest(action, url) {
     if (!httpRequest) {
         return false;
     }
-console.log('begin');
     httpRequest.open("POST", 'http://' + outgrader_url + "/visits/" + action + ".json?url=" + url);
     console.log('created');
     httpRequest.onreadystatechange = function () {
         if (httpRequest.readyState != 4 || httpRequest.status != 200) return;
         console.log("Success: " + httpRequest.responseText);
     };
-    console.log('set ');
     httpRequest.send();
-    console.log('send');
     return true;
 }
 

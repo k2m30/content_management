@@ -10,7 +10,7 @@
   %tbody
     -@visits.each do |visit|
       %tr{class: visit.is_click? ? 'success' : ''}
-        -if visit.is_click?
+        -if visit.is_click? || visit.link.present?
           %td= visit.link.content.name
           %td{title: visit.link.url, class: 'tt'}= visit.link.site.name
           %td= visit.time.to_formatted_s(:short)
