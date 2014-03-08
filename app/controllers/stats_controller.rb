@@ -6,15 +6,19 @@ class StatsController < ApplicationController
   end
 
   def results
-    begin_date = DateTime.parse(params[:from]).strftime('%Q')
-    end_date = DateTime.parse(params[:to]).strftime('%Q')
-#asd
-    outgrader = Param.first || Param.create
-    port = outgrader.outgrader_port
-    ip = outgrader.outgrader_ip
-    uri = URI("http://#{ip}:#{port}/statistics?from=#{begin_date}&to=#{end_date}")
-    response = Net::HTTP.get uri
+    begin
+      begin_date = DateTime.parse(params[:from]).strftime('%Q')
+      end_date = DateTime.parse(params[:to]).strftime('%Q')
+      outgrader = Param.first || Param.create
+      port = outgrader.outgrader_port
+      ip = outgrader.outgrader_ip
+      uri = URI("http://#{ip}:#{port}/statistics?from=#{begin_date}&to=#{end_date}")
+      response = Net::HTTP.get uri
 
-    @visits = ActiveSupport::JSON.decode response
+      @visits = ActiveSupport::JSON.decode response
+    rescue
+      redirect_to stats_choose_dates_path, alert: 'Сервер недоступен'
+      return
+    end
   end
 end

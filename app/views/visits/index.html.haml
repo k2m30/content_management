@@ -16,7 +16,7 @@
           %td= visit.time.to_formatted_s(:short)
           %td= visit.remote_ip
         -else
-          %td= visit.url || 'localhost'
+          %td= link_to visit.url || 'localhost', visit.url
           %td -
           %td= visit.time.to_formatted_s(:short)
           %td= visit.remote_ip

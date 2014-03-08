@@ -2,7 +2,7 @@
 =@begin_date
 =@end_date
 
-%table.table.table-condensed
+%table.table.table-condensed{style: 'table-layout: fixed; '}
   %thead
     -@visits[0].keys.reverse.each do |key|
       %th{style: 'width: 100px; word-break: break-all;'}
@@ -11,7 +11,7 @@
     -@visits.each do |visit|
       %tr
         -visit.keys.reverse.each do |key|
-          %td
+          %td{style: 'overflow: hidden;', title: visit[key], class: 'tt'}
             -if key == 'periodTimestamp'
               =DateTime.strptime(visit[key].to_s, '%Q').strftime('%d/%m %H:%M')
             -else
