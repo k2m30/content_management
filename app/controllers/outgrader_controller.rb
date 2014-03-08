@@ -5,7 +5,6 @@ require 'date'
 require 'headless'
 
 class OutgraderController < ApplicationController
-  skip_before_filter  :verify_authenticity_token, only: [:send_click]
 
   def initialize
     @outgrader = Param.first || Param.create

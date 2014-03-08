@@ -1,4 +1,6 @@
 class VisitsController < ApplicationController
+  skip_before_filter  :verify_authenticity_token, only: [:send_click, :send_visit]
+
   def index
     @visits = Visit.all
   end
