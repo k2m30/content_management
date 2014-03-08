@@ -1,5 +1,5 @@
 class VisitsController < ApplicationController
-  skip_before_filter  :verify_authenticity_token, only: [:send_click, :send_visit]
+  skip_before_filter :verify_authenticity_token, only: [:send_click, :send_visit]
 
   def index
     @visits = Visit.all
@@ -11,15 +11,15 @@ class VisitsController < ApplicationController
     Visit.create(remote_ip: @_env["HTTP_X_FORWARDED_FOR"] || @_env["REMOTE_ADDR"], time: Time.now.to_formatted_s(:short), link: link, is_click: true) unless link.nil?
 
     response.headers['Access-Control-Allow-Origin'] = '*'
-    render text: "click from #{@_env["HTTP_X_FORWARDED_FOR"]},  #{@_env["REMOTE_ADDR"]}",status: :ok
+    render text: "click from #{@_env["HTTP_X_FORWARDED_FOR"]},  #{@_env["REMOTE_ADDR"]}", status: :ok
   end
 
   def send_visit
     params[:url] = 'http://www.kinopoisk.ru/film/77331/' if params[:url].nil?
     link = Link.find_by(url: params[:url])
-    Visit.create(remote_ip: @_env["HTTP_X_FORWARDED_FOR"] || @_env["REMOTE_ADDR"], time: Time.now.to_formatted_s(:short), link: link, is_click: false) unless link.nil?
+    Visit.create(remote_ip: @_env["HTTP_X_FORWARDED_FOR"] || @_env["REMOTE_ADDR"], time: Time.now.to_formatted_s(:short), link: link, is_click: false, url: params[:url])
 
     response.headers['Access-Control-Allow-Origin'] = '*'
-    render text: "visit from #{@_env["HTTP_X_FORWARDED_FOR"]},  #{@_env["REMOTE_ADDR"]}",status: :ok
+    render text: "visit from #{@_env["HTTP_X_FORWARDED_FOR"]},  #{@_env["REMOTE_ADDR"]}", status: :ok
   end
 end

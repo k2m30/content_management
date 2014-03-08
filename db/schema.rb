@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140307150346) do
+ActiveRecord::Schema.define(version: 20140308143438) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,6 +72,7 @@ ActiveRecord::Schema.define(version: 20140307150346) do
     t.datetime "time"
     t.string   "remote_ip"
     t.boolean  "is_click",  default: false
+    t.string   "url"
   end
 
 end

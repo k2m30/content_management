@@ -23,7 +23,6 @@ function addButton() {
 }
 
 function sendRequest(action, url) {
-    if (!url) url = "";
     if (window.XMLHttpRequest) { // Mozilla, Safari, ...
         httpRequest = new XMLHttpRequest();
     } else if (window.ActiveXObject) { // IE
