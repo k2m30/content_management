@@ -2,7 +2,7 @@ class VisitsController < ApplicationController
   skip_before_filter :verify_authenticity_token, only: [:send_click, :send_visit]
 
   def index
-    @visits = Visit.all.reverse
+    @visits = Visit.order(time: :desc)
   end
 
   def send_click

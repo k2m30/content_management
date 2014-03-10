@@ -18,6 +18,7 @@ ContentManagement::Application.routes.draw do
   get 'visits/send_click'
   post 'visits/send_click'
   get 'visits' => 'visits#index'
+  get 'visits/send_visit'
   post 'visits/send_visit'
 
   resources :sites
