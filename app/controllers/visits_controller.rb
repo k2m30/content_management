@@ -2,7 +2,7 @@ class VisitsController < ApplicationController
   skip_before_filter :verify_authenticity_token, only: [:send_click, :send_visit]
 
   def index
-    @visits = Visit.order(time: :desc)
+    @visits = Visit.order(time: :desc).paginate(:page => params[:page], :per_page => 50)
   end
 
   def send_click
