@@ -19,7 +19,8 @@ class VisitsController < ApplicationController
     link = Link.find_by(url: params[:url])
     Visit.create(remote_ip: @_env["HTTP_X_FORWARDED_FOR"] || @_env["REMOTE_ADDR"],
                  time: Time.now.to_formatted_s(:short), link: link,
-                 is_click: false, url: params[:url]) if params[:url].start_with? 'http://www.kinopoisk.ru/film' #TODO remove hardcode
+                 is_click: false, url: params[:url],
+                 film: params[:name] + ', ' + params[:year]) if params[:url].start_with? 'http://www.kinopoisk.ru/film' #TODO remove hardcode
 
     response.headers['Access-Control-Allow-Origin'] = '*'
     render text: "visit from #{@_env["HTTP_X_FORWARDED_FOR"]},  #{@_env["REMOTE_ADDR"]}", status: :ok

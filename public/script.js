@@ -40,8 +40,10 @@ function sendRequest(action, url) {
     if (!httpRequest) {
         return false;
     }
-    httpRequest.open("POST", 'http://' + outgrader_url + "/visits/" + action + ".json?url=" + url);
-    console.log('created');
+    httpRequest.open("POST", 'http://' + outgrader_url + "/visits/"
+        + action + ".json?url=" + url
+        + '&name=' + document.querySelector('#headerFilm .moviename-big').innerHTML
+        + '&year=' + document.querySelector('#infoTable tr:nth-child(1) a').innerHTML);
     httpRequest.onreadystatechange = function () {
         if (httpRequest.readyState != 4 || httpRequest.status != 200) return;
         console.log("Success: " + httpRequest.responseText);
