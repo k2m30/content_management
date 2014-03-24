@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140310114825) do
+ActiveRecord::Schema.define(version: 20140315211720) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,22 @@ ActiveRecord::Schema.define(version: 20140310114825) do
     t.datetime "updated_at"
   end
 
+  create_table "spnuke_files", force: true do |t|
+    t.integer  "files_id"
+    t.integer  "files_cat_id"
+    t.string   "files_title"
+    t.text     "files_url"
+    t.text     "files_description"
+    t.datetime "files_date"
+    t.decimal  "files_size"
+    t.string   "files_server"
+    t.integer  "files_id_serial"
+    t.integer  "year"
+    t.string   "quality"
+    t.string   "remote_url"
+    t.string   "remote_name"
+  end
+
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -66,6 +82,19 @@ ActiveRecord::Schema.define(version: 20140310114825) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+
+  create_table "video_files", force: true do |t|
+    t.string   "internal_name"
+    t.text     "internal_url"
+    t.string   "external_name"
+    t.text     "external_url"
+    t.string   "quality"
+    t.integer  "year"
+    t.integer  "size"
+    t.integer  "content_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "visits", force: true do |t|
     t.integer  "link_id"

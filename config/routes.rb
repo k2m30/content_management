@@ -1,4 +1,6 @@
 ContentManagement::Application.routes.draw do
+  resources :video_files
+
   get "stats/choose_dates"
   get "stats/results"
   devise_for :users

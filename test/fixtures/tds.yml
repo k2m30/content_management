@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  files_title: MyString
+  files_url: MyText
+  files_size: 1
+  year: 1
+  quality: MyString
+  remote_url: MyString
+  remote_name: MyString
+
+two:
+  files_title: MyString
+  files_url: MyText
+  files_size: 1
+  year: 1
+  quality: MyString
+  remote_url: MyString
+  remote_name: MyString

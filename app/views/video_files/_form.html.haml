@@ -1,0 +1,32 @@
+= form_for @video_file, :html => { :class => 'form-horizontal' } do |f|
+  .control-group
+    = f.label :internal_name, :class => 'control-label'
+    .controls
+      = f.text_field :internal_name, :class => 'text_field'
+  .control-group
+    = f.label :internal_url, :class => 'control-label'
+    .controls
+      = f.text_field :internal_url, :class => 'text_field'
+  .control-group
+    = f.label :external_name, :class => 'control-label'
+    .controls
+      = f.text_field :external_name, :class => 'text_field'
+  .control-group
+    = f.label :external_url, :class => 'control-label'
+    .controls
+      = f.text_field :external_url, :class => 'text_field'
+  .control-group
+    = f.label :quality, :class => 'control-label'
+    .controls
+      = f.text_field :quality, :class => 'text_field'
+  .control-group
+    = f.label :year, :class => 'control-label'
+    .controls
+      = f.text_field :year, :class => 'text_field'
+  .control-group
+    = f.label :size, :class => 'control-label'
+    .controls
+      = f.text_field :size, :class => 'text_field'
+  .form-actions
+    = f.submit nil, :class => 'btn btn-primary'
+    = link_to t('.cancel', :default => t("helpers.links.cancel")), video_files_path, :class => 'btn'

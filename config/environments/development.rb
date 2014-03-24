@@ -26,4 +26,9 @@ ContentManagement::Application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
+
+  config.lograge.enabled = true
+  #config.lograge.custom_options = lambda do |event|
+  #  {:time => event.time.to_formatted_s}
+  #end
 end
