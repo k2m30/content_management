@@ -14,15 +14,15 @@ class OutgraderController < ApplicationController
   def get_redirect
     begin
       url = params[:url]
-      url+='/' if not url.end_with?('/')
-      site = Link.find_site(url)
-      internal_link = site.links.find_by(url: url)
-      href = internal_link.content.url
 
-      render text: "var outgrader_url=\"#{Param.first.redirector_ip}\"; var href=\"#{href}\"; #{site.banner}", status: :ok
-    rescue
-      render text: "var outgrader_url=\"#{Param.first.redirector_ip}\"; var href=null; #{site.banner}", status: :ok
+      @link = Link.find_by(url: url)
+      @site = Link.find_site(url)
+
+      #render text: "var outgrader_url=\"#{Param.first.redirector_ip}\"; var href=\"#{href}\"; #{site.banner}", status: :ok
+      #rescue
+      #  render text: "var outgrader_url=\"#{Param.first.redirector_ip}\"; var href=null; #{site.banner}", status: :ok
     end
+    render action: :get_redirect, layout: nil
   end
 
   def index
@@ -132,7 +132,7 @@ class OutgraderController < ApplicationController
       browser_straight.goto(url)
       t3 = Time.now
       div = browser_proxy.div(id: 'outgrader_button')
-      @results[url]=[(t2-t1).round(2),(t3-t2).round(2), div.exists?]
+      @results[url]=[(t2-t1).round(2), (t3-t2).round(2), div.exists?]
     end
     browser_proxy.close
     browser_straight.close

@@ -1,0 +1,8 @@
+var outgrader_url = "#{Param.first.redirector_ip}";
+var href = [];
+-if @link.present?
+  - @link.video_files.each_with_index do |file, index|
+    href[#{index}] = ["#{file.internal_url}","#{file.quality}","#{file.size}"];
+
+= @site.banner
+
