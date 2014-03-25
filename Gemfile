@@ -47,6 +47,7 @@ end
 # gem 'debugger', group: [:development, :test]
 
 gem 'tail'
+gem 'lograge'
 gem 'faker'
 gem 'watir-webdriver'
 gem 'headless'

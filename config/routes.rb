@@ -23,6 +23,8 @@ ContentManagement::Application.routes.draw do
   get 'visits/send_visit'
   post 'visits/send_visit'
 
+  mount Tail::Engine, at: "/tail"
+
   resources :sites
 
   resources :links

@@ -1,16 +1,18 @@
 - model_class = Content
 .page-header
-  %h1 Файлы
+  %h1 Фильмы
+=will_paginate @contents
+
 %table.table.table-striped
   %thead
     %tr
       %th Название
-      %th Внутренняя ссылка
+      %th Кол-во файлов
   %tbody
     - @contents.each do |content|
       %tr
         %td= link_to content.name, content_path(content)
-        %td= content.url
+        %td= content.video_files.count
         %td
           = link_to 'Изменить', edit_content_path(content), :class => 'btn btn-mini'
           = link_to 'Добавить внешние ссылки', content_path(content), :class => 'btn btn-mini'

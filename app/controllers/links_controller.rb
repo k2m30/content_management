@@ -6,7 +6,8 @@ class LinksController < ApplicationController
   # GET /links
   # GET /links.json
   def index
-    @links = params[:site].nil? ? Link.all : Link.where(site_id: params[:site])
+    @links = params[:site].nil? ? Link.all.order('contents.name', 'sites.name').includes(:content, :site).paginate(page: params[:page], per_page: 30) :
+        Link.where(site_id: params[:site]).order('contents.name').includes(:content).paginate(page: params[:page], per_page: 30)
   end
 
   # GET /links/1

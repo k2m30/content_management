@@ -1,7 +1,7 @@
 class Link < ActiveRecord::Base
   belongs_to :site
   belongs_to :content
-  has_many :visits
+  has_many :visits, dependent: :destroy
   validates :url, presence: { strict: true }, uniqueness: { strict: true }
 
   def self.find_site(url)

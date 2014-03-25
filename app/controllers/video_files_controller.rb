@@ -4,7 +4,9 @@ class VideoFilesController < ApplicationController
   # GET /video_files
   # GET /video_files.json
   def index
-    @video_files = VideoFile.all
+    @video_files = VideoFile.all.order(:external_name).paginate(page: params[:page], per_page: 50)
+    #VideoFile.import
+    #render text: 'ok'
   end
 
   # GET /video_files/1

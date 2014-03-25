@@ -90,7 +90,7 @@ ActiveRecord::Schema.define(version: 20140315211720) do
     t.text     "external_url"
     t.string   "quality"
     t.integer  "year"
-    t.integer  "size"
+    t.float    "size"
     t.integer  "content_id"
     t.datetime "created_at"
     t.datetime "updated_at"

@@ -1,14 +1,18 @@
 %h3 Внешние ссылки
+=will_paginate @links
 %table.table.table-striped
   %thead
     %tr
       %th Адрес
-      %th Файл
+      %th Фильм
+      %th Кол-во файлов
+
   %tbody
     - @links.each do |link|
       %tr
-        %td= link.url
-        %td= link.content.name
+        %td= link_to link.url, link.url, target: '_blank'
+        %td= link_to link.content.name, content_path(link.content)
+        %td= link.content.video_files.count
         %td
           = link_to 'Изменить', edit_link_path(link), :class => 'btn btn-mini'
           = link_to 'Удалить', link_path(link), :method => :delete, :data => { :confirm => 'Удалить?' }, :class => 'btn btn-mini btn-danger'

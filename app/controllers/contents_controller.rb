@@ -5,7 +5,7 @@ class ContentsController < ApplicationController
   # GET /contents
   # GET /contents.json
   def index
-    @contents = Content.all
+    @contents = Content.all.order(:name).paginate(page: params[:page], per_page: 30)
   end
 
   # GET /contents/1
