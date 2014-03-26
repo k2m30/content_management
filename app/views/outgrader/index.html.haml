@@ -23,13 +23,13 @@
           =@state_hash[key] unless key=='threadInfo'
 %hr
 
-%table.table.table-bordered
+%table.table.table-bordered.table-condensed
   %thead
     -@state_hash['threadInfo'][0].keys.each do |key|
       %th
         =key
   %tbody
-    -@state_hash['threadInfo'].each do |row|
+    -@state_hash['threadInfo'].reverse.each do |row|
       %tr
         -row.keys.each do |key|
           %td
