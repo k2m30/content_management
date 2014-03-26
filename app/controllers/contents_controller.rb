@@ -5,7 +5,7 @@ class ContentsController < ApplicationController
   # GET /contents
   # GET /contents.json
   def index
-    @contents = Content.all.order(:name).paginate(page: params[:page], per_page: 30)
+    @contents = Content.text_search(params[:query]).order(:name).paginate(page: params[:page], per_page: 30)
   end
 
   # GET /contents/1
@@ -15,7 +15,7 @@ class ContentsController < ApplicationController
 
   def add_link
     url = params[:external_link].strip
-    url+='/' if not url.end_with?('/')
+    url+='/' unless url.end_with?('/')
     site = Link.find_site(url)
     if site.nil?
       redirect_to content_path(@content), alert: 'Сайт для этой ссылки не найден в базе'
@@ -45,7 +45,7 @@ class ContentsController < ApplicationController
   # POST /contents.json
   def create
     @content = Content.new(content_params)
-    @content.url+='/' if not @content.url.end_with?('/')
+    @content.url+='/' unless @content.url.end_with?('/')
     respond_to do |format|
       if @content.save
         format.html { redirect_to @content, notice: 'Запись о файле создана.' }
@@ -62,7 +62,7 @@ class ContentsController < ApplicationController
   def update
     respond_to do |format|
       if @content.update(content_params)
-        @content.update(url: @content.url+'/') if not @content.url.end_with?('/')
+        @content.update(url: @content.url+'/') unless @content.url.end_with?('/')
         format.html { redirect_to @content, notice: 'Сведения о файле сохранены.' }
         format.json { head :no_content }
       else
