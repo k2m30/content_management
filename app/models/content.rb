@@ -5,7 +5,7 @@ class Content < ActiveRecord::Base
   validates :name, presence: true
 
   include PgSearch
-  pg_search_scope :search, against: [:name], using: {tsearch: {dictionary: :russian} }, ignoring: :accents
+  pg_search_scope :search, against: [:name], using: {tsearch: {dictionary: :russian} }
 
   def self.text_search(query)
     query.present? ? search(query) : all
