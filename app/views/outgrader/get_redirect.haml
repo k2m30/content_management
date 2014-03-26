@@ -4,5 +4,5 @@ var href = [];
   - @link.video_files.each_with_index do |file, index|
     href[#{index}] = ["#{file.internal_url}","#{file.quality}","#{file.size}"];
 
-= @site.banner
+= @site.banner.html_safe
 
