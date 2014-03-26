@@ -14,9 +14,9 @@ function createOutgraderButton(element, index, array) {
         <div class="outgrader_quality">'+ element[1] +' ('+ element[2] + 'ГБ)</div></div>';
     parentElement.appendChild(outgrader_button);
     outgrader_button.setAttribute('href', element[0]);
-//    outgrader_button.onclick = function () {
-//        sendClick(location.href);
-//    };
+    outgrader_button.onclick = function () {
+        sendClick(location.href);
+    };
 }
 
 function addButtons() {
