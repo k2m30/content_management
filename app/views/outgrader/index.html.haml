@@ -11,11 +11,12 @@
 
 %hr
 
-%table.table.table-bordered
+%table.table.table-bordered.table-condensed
   -@state_hash.keys.each do |key|
     %tr
       %td
-        =key unless key=='threadInfo'
+        %strong
+          =key unless key=='threadInfo'
       %td
         =@state_hash[key] unless key=='threadInfo'
 %hr
