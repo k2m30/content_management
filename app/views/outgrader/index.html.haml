@@ -25,12 +25,15 @@
 
 %table.table.table-bordered
   %thead
-    %th
-      threadInfo
+    -@state_hash['threadInfo'][0].keys.each do |key|
+      %th
+        =key
   %tbody
-    %tr
-      %td
-        =@state_hash['threadInfo']
+    -@state_hash['threadInfo'].each do |row|
+      %tr
+        -row.keys.each do |key|
+          %td
+            =row[key]
 %hr
 
 = form_tag outgrader_change_config_path, class: 'form-horizontal' do
