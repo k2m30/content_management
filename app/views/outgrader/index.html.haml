@@ -15,12 +15,22 @@
   %thead
     -@state_hash.keys.each do |key|
       %th
-        =key
+        =key unless key=='threadInfo'
   %tbody
     %tr
       -@state_hash.keys.each do |key|
         %td
-          =@state_hash[key]
+          =@state_hash[key] unless key=='threadInfo'
+%hr
+
+%table.table.table-bordered
+  %thead
+    %th
+      threadInfo
+  %tbody
+    %tr
+      %td
+        =@state_hash['threadInfo']
 %hr
 
 = form_tag outgrader_change_config_path, class: 'form-horizontal' do
