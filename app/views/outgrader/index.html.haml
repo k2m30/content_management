@@ -12,28 +12,12 @@
 %hr
 
 %table.table.table-bordered
-  %thead
-    -@state_hash.keys.each do |key|
-      %th
-        =key unless key=='threadInfo'
-  %tbody
+  -@state_hash.keys.each do |key|
     %tr
-      -@state_hash.keys.each do |key|
-        %td
-          =@state_hash[key] unless key=='threadInfo'
-%hr
-
-%table.table.table-bordered.table-condensed
-  %thead
-    -@state_hash['threadInfo'][0].keys.each do |key|
-      %th
-        =key
-  %tbody
-    -@state_hash['threadInfo'].reverse.each do |row|
-      %tr
-        -row.keys.each do |key|
-          %td
-            =row[key]
+      %td
+        =key unless key=='threadInfo'
+      %td
+        =@state_hash[key] unless key=='threadInfo'
 %hr
 
 = form_tag outgrader_change_config_path, class: 'form-horizontal' do
@@ -68,3 +52,18 @@
       =text_field_tag :ip, @outgrader.redirector_ip, class: 'text_field'
   .form-actions
     =submit_tag 'Изменить', class: 'btn'
+%hr
+
+%table.table.table-bordered.table-condensed
+  %thead
+    -@state_hash['threadInfo'][0].keys.each do |key|
+      %th
+        =key
+  %tbody
+    -@state_hash['threadInfo'].reverse.each do |row|
+      %tr
+        -row.keys.each do |key|
+          %td
+            =row[key]
+%hr
+
