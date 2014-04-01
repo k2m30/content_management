@@ -17,11 +17,13 @@ ContentManagement::Application.routes.draw do
   post 'outgrader/redirector_change_ip'
   post 'outgrader/change_config'
 
-  get 'visits/send_click'
+  #get 'visits/send_click'
   post 'visits/send_click'
   get 'visits' => 'visits#index'
-  get 'visits/send_visit'
+  #get 'visits/send_visit'
   post 'visits/send_visit'
+
+
 
   mount Tail::Engine, at: "/tail"
 
@@ -32,6 +34,10 @@ ContentManagement::Application.routes.draw do
   resources :contents do
     member do
       post 'add_link' => 'contents#add_link'
+
+    end
+    collection do
+      get 'create_with_kinopoisk' => 'contents#create_with_kinopoisk'
     end
   end
 

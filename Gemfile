@@ -74,3 +74,5 @@ end
 gem 'rvm-capistrano'
 gem 'capistrano', '~> 2.15'
 gem 'unicorn'
+
+gem 'nokogiri'

@@ -1,59 +1,34 @@
-%strong
-  = @content.name
-(
-= @content.url
-)
-= link_to 'Изменить', edit_content_path(@content), :class => 'btn btn-mini'
-= link_to 'Назад', contents_path, :class => 'btn btn-mini'
+:css
+  .type {
+  padding: 6px 0;
+  width: 300;
+  }
+  .type+td {
+    padding-left: 100px;
+    width: 300;
+    }
+  .type+td img {
+      padding-left: 18px;
 
+      }
+
+-if true
+  = render partial: 'admin'
+
+
+.row
+  .span2
+    -if @content.image.present?
+      = image_tag @content.image.html_safe, style: ''
+  .span5
+    -if @content.description.present?
+      =@content.description.html_safe
+  .span2
+    Рейтинг
+    -if @content.rating.present?
+      =@content.rating.html_safe
 %hr
-
-= form_tag add_link_content_path, class: 'form-horizontal' do
-  = label_tag 'Добавить ссылку'
-  = text_field_tag :external_link, nil, class: 'span7'
-  = submit_tag 'Добавить', class: 'btn'
-
-
-%hr
-
-%table.table.table-striped.table-condensed
-  %thead
-    %tr
-      %th Внешние ссылки
-      %th Действия
-  %tbody
-    - @content.links.order(:url).each do |link|
-      %tr
-        %td
-          = link_to link.url, link.url, target: '_blank'
-        %td
-          = link_to 'Изменить', edit_link_path(link), class: 'btn btn-mini'
-          = link_to 'Удалить', link_path(link), method: :delete, class: 'btn btn-mini'
-
-%hr
-
-%table.table.table-striped.table-condensed
-  %thead
-    %tr
-      %th Файлы
-      %th Качество
-      %th Размер, ГБ
-  %tbody
-    - @content.video_files.order(:internal_name).uniq.each do |file|
-      %tr
-        %td
-          = link_to file.internal_name, file.internal_url
-        %td
-          = file.quality
-          %td
-            = file.size
-
-%table.table.table-striped.table-condensed
-  %thead
-    %tr
-      %th Сайты
-  %tbody
-    - @content.sites.order(:name).uniq.each do |site|
-      %tr
-        %td
-          = site.name
+.row
+  .span6
+    -if @content.info.present?
+      =@content.info.html_safe

@@ -1,2 +1,5 @@
 %h3 Добавить файл
-= render :partial => "form"
+
+= form_tag create_with_kinopoisk_contents_path, method: :get, class: 'form-horizontal' do
+  = text_field_tag :kinopoisk
+  = submit_tag 'Добавить', class: 'btn'

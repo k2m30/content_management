@@ -37,6 +37,10 @@ class ContentsController < ApplicationController
     @content = Content.new
   end
 
+  def create_with_kinopoisk
+    redirect_to contents_path, notice: 'Фильм добавлен в базу.' if Content.create_with_kinopoisk?(params[:kinopoisk])
+  end
+
   # GET /contents/1/edit
   def edit
   end
