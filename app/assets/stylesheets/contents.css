@@ -1,0 +1,25 @@
+.type {
+    padding: 6px 0;
+    width: 300;
+}
+.type+td {
+    padding-left: 100px;
+    width: 300;
+}
+.type+td img {
+    padding-left: 18px;
+
+}
+span.rating_ball{
+    font-size: 30px;
+    color: black;
+}
+.download{
+    padding: 10px;
+    margin: 10px 0;
+    margin-left: 20%; /* Отступ слева */
+    width: 60%;
+}
+.centered{
+    text-align: center;
+}

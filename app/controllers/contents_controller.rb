@@ -1,5 +1,5 @@
 class ContentsController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, except: [:index, :show]
   before_action :set_content, only: [:show, :edit, :update, :destroy, :add_link]
 
   # GET /contents

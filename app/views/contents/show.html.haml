@@ -1,28 +1,14 @@
-:css
-  .type {
-  padding: 6px 0;
-  width: 300;
-  }
-  .type+td {
-    padding-left: 100px;
-    width: 300;
-    }
-  .type+td img {
-      padding-left: 18px;
-
-      }
-
--if true
+-if user_signed_in?
   = render partial: 'admin'
-
 
 .row
   .span2
     -if @content.image.present?
       = image_tag @content.image.html_safe, style: ''
-  .span5
+  .span4
     -if @content.description.present?
       =@content.description.html_safe
+  .span1
   .span2
     Рейтинг
     -if @content.rating.present?
@@ -32,3 +18,11 @@
   .span6
     -if @content.info.present?
       =@content.info.html_safe
+  .span6
+    -unless @content.video_files.empty?
+      .muted.centered
+        Этот файл есть во внутренней сети
+      %h3.centered
+        Скачать
+      -@content.video_files.each do |file|
+        =link_to "#{file.internal_name} (#{file.size}ГБ, #{file.quality})", file.internal_url, class: 'btn btn-info download'
