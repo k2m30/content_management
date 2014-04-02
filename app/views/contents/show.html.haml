@@ -4,16 +4,17 @@
 .row
   .span2
     -if @content.image.present?
-      = image_tag @content.image.html_safe, style: ''
+      = image_tag @content.image.html_safe, class: :icon
   .span4
+    %h4
+      = @content.name
     -if @content.description.present?
       =@content.description.html_safe
-  .span1
-  .span2
+  .span2#rating
     Рейтинг
     -if @content.rating.present?
       =@content.rating.html_safe
-%hr
+%br
 .row
   .span6
     -if @content.info.present?
@@ -21,7 +22,7 @@
   .span6
     -unless @content.video_files.empty?
       .muted.centered
-        Этот файл есть во внутренней сети
+        Этот фильм есть во внутренней сети
       %h3.centered
         Скачать
       -@content.video_files.each do |file|
