@@ -1,8 +1,20 @@
+require 'will_paginate/array'
+
 class VisitsController < ApplicationController
+  before_filter :authenticate_user!
   skip_before_filter :verify_authenticity_token, only: [:send_click, :send_visit]
 
   def index
-    @visits = Visit.order(time: :desc).paginate(:page => params[:page], :per_page => 50)
+    @visits = Visit.order(time: :desc).paginate(page: params[:page], per_page: 50)
+  end
+
+  def downloads
+    @visits = Visit.where(is_click: true).order(time: :desc).paginate(page: params[:page], per_page: 50)
+    render action: :index
+  end
+
+  def most_wanted
+    @list = Visit.stats(params[:from], params[:to]).paginate(page: params[:page], per_page: 10)
   end
 
   def send_click

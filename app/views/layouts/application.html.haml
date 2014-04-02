@@ -22,6 +22,8 @@
                 %li= link_to 'Сайты', sites_path
                 %li= link_to 'Внешние ссылки', links_path
                 %li= link_to 'Статистика', visits_path
+                %li= link_to 'Скачивания', visits_downloads_path
+                %li= link_to 'Most Wanted', visits_most_wanted_path
             - if user_signed_in?
               %ul.nav.pull-right
                 %li= link_to 'Выход', destroy_user_session_path, :method => :delete

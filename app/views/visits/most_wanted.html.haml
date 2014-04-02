@@ -1,0 +1,20 @@
+=link_to 'Всего', visits_most_wanted_path
+|
+=link_to 'За месяц', visits_most_wanted_path(from: Time.current - 1.month, to: Time.current)
+
+%h4 Most wanted
+%table.table.table-striped.table-condensed
+  %thead
+    %tr
+      %th Название
+      %th Кол-во запросов
+  %tbody
+    -@list.each do |film|
+      %tr
+        %td
+          =film[0]
+        %td
+          =film[1]
+
+.paginate.pagination-centered
+  =will_paginate @list

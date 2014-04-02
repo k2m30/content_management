@@ -22,7 +22,8 @@ ContentManagement::Application.routes.draw do
   get 'visits' => 'visits#index'
   #get 'visits/send_visit'
   post 'visits/send_visit'
-
+  get 'visits/downloads'
+  get 'visits/most_wanted'
 
 
   mount Tail::Engine, at: "/tail"
