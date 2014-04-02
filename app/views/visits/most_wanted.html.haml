@@ -1,3 +1,5 @@
+= content_for :title, 'Most wanted'
+
 =link_to 'Всего', visits_most_wanted_path
 |
 =link_to 'За месяц', visits_most_wanted_path(from: Time.current - 1.month, to: Time.current)
