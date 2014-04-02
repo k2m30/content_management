@@ -1,4 +1,4 @@
-%h3 Фильмы
+%h3 Фильмы во внутренней сети
 
 =form_tag contents_path, class: 'form-horizontal', method: :get do
   .input-prepend
@@ -11,16 +11,26 @@
   %thead
     %tr
       %th Название
+      %th
       %th Кол-во файлов
   %tbody
     - @contents.each do |content|
       %tr
-        %td= link_to content.name, content_path(content)
-        %td= content.video_files.count
+        %td= link_to content.name, content_path(content), style: 'vertical-align: middle;'
         %td
-          = link_to 'Изменить', edit_content_path(content), :class => 'btn btn-mini'
-          = link_to 'Добавить ссылки', content_path(content), :class => 'btn btn-mini'
-          = link_to 'Удалить', content_path(content), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-mini'
+          - if content.video_files.size > 1
+            - sign = 'Выбрать'
+            - url = content_path(content)
+          - else
+            - sign = 'Скачать'
+            - url = content.video_files.first.internal_url
+          =link_to sign, url, class: 'btn btn-small btn-info'
+        %td= content.video_files.count
+        -if user_signed_in?
+          %td
+            = link_to 'Изменить', edit_content_path(content), :class => 'btn btn-mini'
+            = link_to 'Добавить ссылки', content_path(content), :class => 'btn btn-mini'
+            = link_to 'Удалить', content_path(content), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-mini'
 
 .paginate.pagination-centered
   =will_paginate @contents
