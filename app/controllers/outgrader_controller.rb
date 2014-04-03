@@ -14,13 +14,15 @@ class OutgraderController < ApplicationController
   def get_redirect
     begin
       url = params[:url]
-
-      @link = Link.find_by(url: url)
-      @site = Link.find_site(url)
-
-      #render text: "var outgrader_url=\"#{Param.first.redirector_ip}\"; var href=\"#{href}\"; #{site.banner}", status: :ok
-      #rescue
-      #  render text: "var outgrader_url=\"#{Param.first.redirector_ip}\"; var href=null; #{site.banner}", status: :ok
+      url+='/' unless url.end_with?('/')
+      link = Link.find_by(url: url)
+      site = Link.find_site(url)
+      @banner = site.banner.html_safe
+      content = link.present? ? link.content : nil
+      @href = content_url(content)
+    rescue => e
+      @banner = "//#{e.message}, #{url}"
+      @href = 'null'
     end
     render action: :get_redirect, layout: nil
   end
