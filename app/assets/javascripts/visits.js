@@ -14,10 +14,10 @@ $(function() {
         // The name of the data record attribute that contains x-values.
         xkey: 'hour',
         // A list of names of data record attributes that contain y-values.
-        ykeys: ['visits', 'downloads'],
+        ykeys: ['visits', 'downloads', 'users'],
         // Labels for the ykeys -- will be displayed when you hover over the
         // chart.
-        labels: ['Посещенные страницы', 'Скачивания']
+        labels: ['Посещенные страницы', 'Скачивания', 'Пользователи']
     });
 });
 

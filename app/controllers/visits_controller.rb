@@ -12,6 +12,7 @@ class VisitsController < ApplicationController
       visits = Visit.all.select {|visit| visit.time.hour == i}
       a[:visits] = visits.count
       a[:downloads] = visits.select {|visit| visit.is_click? }.count
+      a[:users] = visits.map(&:remote_ip).uniq.count
     end
   end
 
