@@ -8,7 +8,7 @@ class VisitsController < ApplicationController
     @visits = Visit.order(time: :desc).paginate(page: params[:page], per_page: 50)
     @stats = Array.new(24) {{}}
     @stats.each_with_index do |a, i|
-      a[:hour] = i.to_s
+      a[:hour] = i.to_s + ':00'
       visits = Visit.all.select {|visit| visit.time.hour == i}
       a[:visits] = visits.count
       a[:downloads] = visits.select {|visit| visit.is_click? }.count
