@@ -1,4 +1,7 @@
 = content_for :title, 'Статистика'
+
+=content_tag :div, '', id: 'stats', data: {visits: @stats}
+
 .paginate.pagination-centered
   =will_paginate @visits
 

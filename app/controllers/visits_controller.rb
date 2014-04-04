@@ -6,6 +6,11 @@ class VisitsController < ApplicationController
 
   def index
     @visits = Visit.order(time: :desc).paginate(page: params[:page], per_page: 50)
+    @stats = Array.new(24) {{}}
+    @stats.each_with_index do |a, i|
+      a[:hour] = i
+      a[:count] = Visit.all.select {|visit| visit.time.hour == i}.count
+    end
   end
 
   def downloads
