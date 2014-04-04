@@ -1,0 +1,6 @@
+%h5.centered Часы
+= content_for :title, 'Графики'
+=content_tag :div, '', id: 'hourly_stats', data: {visits: @hourly_stats}
+%hr
+%h5.centered Дни недели
+=content_tag :div, '', id: 'daily_stats', data: {visits: @daily_stats}

@@ -55,16 +55,17 @@
     =submit_tag 'Изменить', class: 'btn'
 %hr
 
-%table.table.table-bordered.table-condensed
-  %thead
-    -@state_hash['threadInfo'][0].keys.each do |key|
-      %th
-        =key
-  %tbody
-    -@state_hash['threadInfo'].reverse.each do |row|
-      %tr
-        -row.keys.each do |key|
-          %td
-            =row[key]
+-if @state_hash['threadInfo'].present?
+  %table.table.table-bordered.table-condensed
+    %thead
+      -@state_hash['threadInfo'][0].keys.each do |key|
+        %th
+          =key
+    %tbody
+      -@state_hash['threadInfo'].reverse.each do |row|
+        %tr
+          -row.keys.each do |key|
+            %td
+              =row[key]
 %hr
 

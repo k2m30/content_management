@@ -6,10 +6,24 @@ class VisitsController < ApplicationController
 
   def index
     @visits = Visit.order(time: :desc).paginate(page: params[:page], per_page: 50)
-    @stats = Array.new(24) {{}}
-    @stats.each_with_index do |a, i|
+  end
+
+  def graph
+    all_visits = Visit.all
+    @hourly_stats = Array.new(24) {{}}
+    @hourly_stats.each_with_index do |a, i|
       a[:hour] = i.to_s + ':00'
-      visits = Visit.all.select {|visit| visit.time.hour == i}
+      visits = all_visits.select {|visit| visit.time.hour == i}
+      a[:visits] = visits.count
+      a[:downloads] = visits.select {|visit| visit.is_click? }.count
+      a[:users] = visits.map(&:remote_ip).uniq.count
+    end
+
+    day_of_weeks = %w[Пон Вт Ср Чт Пт Сб Вс]
+    @daily_stats = Array.new(7){{}}
+    @daily_stats.each_with_index do |a, i|
+      a[:day] = day_of_weeks[i]
+      visits = all_visits.select {|visit| visit.time.wday == i}
       a[:visits] = visits.count
       a[:downloads] = visits.select {|visit| visit.is_click? }.count
       a[:users] = visits.map(&:remote_ip).uniq.count
