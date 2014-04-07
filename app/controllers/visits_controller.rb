@@ -28,6 +28,15 @@ class VisitsController < ApplicationController
       a[:downloads] = visits.select {|visit| visit.is_click? }.count
       a[:users] = visits.map(&:remote_ip).uniq.count
     end
+
+    @weekly_stats = Array.new(52){{}}
+    @weekly_stats.each_with_index do |a, i|
+      a[:week] = i
+      visits = all_visits.select {|visit| visit.time.to_datetime.cweek == i}
+      a[:visits] = visits.count
+      a[:downloads] = visits.select {|visit| visit.is_click? }.count
+      a[:users] = visits.map(&:remote_ip).uniq.count
+    end
   end
 
   def downloads
