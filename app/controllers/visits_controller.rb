@@ -39,6 +39,10 @@ class VisitsController < ApplicationController
     end
   end
 
+  def torrents
+    @torrents = Visit.get_torrents
+  end
+
   def downloads
     @visits = Visit.where(is_click: true).order(time: :desc).paginate(page: params[:page], per_page: 50)
     render action: :index

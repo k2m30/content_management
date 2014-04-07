@@ -25,6 +25,7 @@ ContentManagement::Application.routes.draw do
   get 'visits/downloads'
   get 'visits/most_wanted'
   get 'visits/graph'
+  get 'visits/torrents'
 
 
   mount Tail::Engine, at: "/tail"

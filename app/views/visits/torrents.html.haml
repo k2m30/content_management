@@ -1,0 +1,20 @@
+%table.table
+  %thead
+    %th Название
+    %th Кол-во файлов в базе
+    %th Качество
+
+  %tbody
+    - @torrents.each do |torrent|
+      -row_class = torrent[:files_number] == 0 ? 'error' : ''
+      %tr{class: row_class }
+        %td
+          -if torrent[:files_number] > 0
+            %i.icon-ok{style: 'color: green;'}
+          ="#{torrent[:name]}, #{torrent[:year]}"
+        %td
+          =torrent[:files_number]
+        %td
+          =torrent[:quality]
+
+

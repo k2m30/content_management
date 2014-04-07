@@ -2,6 +2,7 @@ class VideoFile < ActiveRecord::Base
   belongs_to :content
   has_many :links, through: :content
 
+  QUALITIES = ['DVDRip', 'BD', 'HDRip', 'BD 1080p', 'BD 720p', 'TVRip', 'SATRip', 'HD 720p', 'hdrip', 'HD', 'DVDip', 'TS', 'HD 1080p', 'WEB-DL 1080p', 'WEB-DLRip', 'DVDrip', 'WEB-DL720p', nil, 'WEB-DL 720p', 'DVDRIp', 'DVDScr', 'WEBRip', 'CAMRip', 'WEB-DL 1080', 'SATrip', 'BRip', 'VHSRip', 'ВD 720p', 'WEB 720p', 'dvdrip', 'BR 720p', 'satrip', 'DVRip', 'hd 720p', 'ВD 720р', 'bdrip', 'SatRip', 'WebRip', 'DVBRip', 'ВD 1080р', 'HDRip', 'DVDRip', 'BDRip', 'SATRip', 'HDTVRip']
   def self.import
     site = Site.find_by(name: 'kinopoisk.ru')
 
