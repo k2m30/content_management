@@ -1,4 +1,4 @@
-require 'tail'
+#require 'tail'
 
 ContentManagement::Application.routes.draw do
   resources :video_files
@@ -30,7 +30,7 @@ ContentManagement::Application.routes.draw do
   get 'visits/torrents'
 
 
-  mount Tail::Engine, at: "/tail"
+  #mount Tail::Engine, at: "/tail"
 
   resources :sites
 
