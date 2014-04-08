@@ -1,5 +1,11 @@
 require 'bundler/capistrano'
 
+#pg_dump -c -U cm --role=cm cm_dev > snapshot
+#gzip snapshot
+#scp lagutko@93.125.49.90:/home/lagutko/apps/content_management/current/snapshot.gz ~/projects/content_management/snapshot_prod.gz
+#scp snapshot lagutko@93.125.49.90:/home/lagutko
+#psql -U cm cm_prod < ./snapshot
+
 #server '93.125.49.90', :web, :app, :db, primary: true
 server '37.230.117.50', :web, :app, :db, primary: true
 
