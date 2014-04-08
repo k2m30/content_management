@@ -1,3 +1,5 @@
+require 'tail'
+
 ContentManagement::Application.routes.draw do
   resources :video_files
 
