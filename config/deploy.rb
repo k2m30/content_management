@@ -1,7 +1,7 @@
 require 'bundler/capistrano'
 
-server '93.125.49.90', :web, :app, :db, primary: true
-#server '37.230.117.50', :web, :app, :db, primary: true
+#server '93.125.49.90', :web, :app, :db, primary: true
+server '37.230.117.50', :web, :app, :db, primary: true
 
 set :whenever_command, 'bundle exec whenever'
 set :application, 'content_management'
