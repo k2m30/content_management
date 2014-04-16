@@ -22,14 +22,14 @@ development:
   username: cm
   password: 12345678
 
-#td:
-#  adapter: mysql2
-#  encoding: utf8
-#  database: td
-#  pool: 5
-#  username: root
-#  password:
-#  socket: /tmp/mysql.sock
+td:
+  adapter: mysql2
+  encoding: utf8
+  database: td
+  pool: 5
+  username: root
+  password:
+  socket: /tmp/mysql.sock
 
 test:
   adapter: postgresql
