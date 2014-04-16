@@ -21,7 +21,7 @@ class SpnukeFiles < ActiveRecord::Base
   end
 
   def stats
-    [self.files_url, self.get_quality, self.get_year]
+    [self.get_external, self.get_quality, self.get_year]
   end
 
   def get_size
@@ -30,6 +30,7 @@ class SpnukeFiles < ActiveRecord::Base
 
   def sync
     file = self
+    p file.files_title
     video = VideoFile.find_by(internal_name: file.files_title, year: file.get_year)
     if video.present?
       p 'present'
@@ -49,6 +50,10 @@ class SpnukeFiles < ActiveRecord::Base
     end
   end
 
+  def self.sync_all(start_id = 1)
+    files = SpnukeFiles.where('files_id > ?',start_id).where(files_cat_id: SpnukeFiles::CATEGORIES)
+    files.each(&:sync)
+  end
 
   def get_external
     base_url = 'http://www.kinopoisk.ru/'

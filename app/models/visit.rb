@@ -26,6 +26,12 @@ class Visit < ActiveRecord::Base
       torrents[i][:quality] = title.split('/').last.strip
 
       content = Content.find_by(name: "#{torrents[i][:name]}, #{torrents[i][:year]}")
+      if content.nil?
+        content = Content.find_by(name: "#{torrents[i][:name]}, #{torrents[i][:year].to_i-1}")
+      end
+      if content.nil?
+        content = Content.find_by(name: "#{torrents[i][:name]}, #{torrents[i][:year].to_i+1}")
+      end
       torrents[i][:files_number] = content.present? ? content.video_files.size : 0
     end
     torrents.select! {|torrent| VideoFile::QUALITIES.include? torrent[:quality]}
