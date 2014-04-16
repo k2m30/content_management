@@ -2,8 +2,7 @@ require 'will_paginate/array'
 
 class VisitsController < ApplicationController
   before_filter :authenticate_user!, only: [:index, :downloads, :most_wanted]
-  skip_before_filter :verify_authenticity_token, only: [:send_click, :send_visit]
-  protect_from_forgery except: [:send_visit, :send_click]
+  skip_before_action :verify_authenticity_token, only: [:send_click, :send_visit]
 
   def index
     @visits = Visit.order(time: :desc).paginate(page: params[:page], per_page: 50)
