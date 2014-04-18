@@ -24,6 +24,7 @@ class OutgraderController < ApplicationController
       @banner = site.banner.html_safe
       @href = 'null'
     end
+    response.headers['Access-Control-Allow-Origin'] = '*'
     render action: :get_redirect, layout: nil
   end
 
