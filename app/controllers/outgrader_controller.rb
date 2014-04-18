@@ -107,7 +107,7 @@ class OutgraderController < ApplicationController
   def redirector_change_ip
     begin
       @outgrader.update(redirector_ip: params[:ip].gsub('http://', ''))
-      redirect_js = "$.ajax({url: \"http://#{@outgrader.redirector_ip}/outgrader/get_redirect.js\?url=\" + location.href, dataType: \"script\"});"
+      redirect_js = "var r = new XMLHttpRequest();r.open('get', 'http://#{@outgrader.redirector_ip}/outgrader/get_redirect.js?url=' + location.href);r.send();"
       f = File.open('./public/redirector.js', 'w+')
       f.write(redirect_js)
       f.close
