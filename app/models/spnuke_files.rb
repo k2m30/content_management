@@ -5,7 +5,7 @@ require 'erb'
 include ERB::Util
 
 class SpnukeFiles < ActiveRecord::Base
-  establish_connection :td
+  #establish_connection :td
   CATEGORIES = [3, 33, 37, 40, 41, 44, 47, 49, 50, 51, 52, 53, 57, 58, 59, 61, 63, 64, 66, 92, 93, 97, 103, 104, 105, 111, 295, 297, 581, 643, 961, 2007, 2179, 2215, 2360, 6799, 7090, 8173, 8473, 8969, 9007, 9961, 10249, 10575, 11524, 12140, 12163, 13004, 13729, 13800, 13808, 13828]
   QUALITIES = ["WEB-DL 1080p", "WEB-DL 720p", "WEB-DL 1080", "WEB-DL720p", "WEB-DLRip", "WЕB-DLRip", "HD 1080p", "ВD 1080р", "WEB 720p", "BD 1080p", "HD 720p", "BR 720p", "BD 720p", "ВD 720p", "ВD 720р", "hd 720p", "DVBRip", "SatRip", "CAMRip", "DVDScr", "DVDRip", "WEBRip", "DVDRIp", "satrip", "SATrip", "DVDrip", "WebRip", "VHSRip", "SATRip", "dvdrip", "DVDip", "hdrip", "DVRip", "НDRip", "TVRip", "HDRip", "bdrip", "BRip", "HD", "TS", "BD"]
 
