@@ -108,7 +108,14 @@ class OutgraderController < ApplicationController
   def redirector_change_ip
     begin
       @outgrader.update(redirector_ip: params[:ip].gsub('http://', ''))
-      redirect_js = "var r = new XMLHttpRequest();r.open('get', 'http://#{@outgrader.redirector_ip}/outgrader/get_redirect.js?url=' + location.href);r.onreadystatechange = function () {if (r.readyState != 4 || r.status != 200) return;eval(r.responseText);};r.send();"
+
+      f = File.open('./public/redirector.js')
+      redirect_js = f.read
+      f.close
+
+      old_url = redirect_js[/http:\/\/.*\..{2,3}\//]
+      redirect_js = redirect_js.gsub(old_url,"http://#{@outgrader.redirector_ip}/")
+
       f = File.open('./public/redirector.js', 'w+')
       f.write(redirect_js)
       f.close
@@ -116,35 +123,6 @@ class OutgraderController < ApplicationController
       redirect_to outgrader_path, alert: 'Ошибка изменения адреса'
     end
     redirect_to outgrader_path, notice: 'Адрес изменен'
-  end
-
-  def test
-    if not ENV['USER']=='Mikhail'
-      headless = Headless.new
-      headless.start
-    end
-    profile = Selenium::WebDriver::Firefox::Profile.new
-    profile.proxy = Selenium::WebDriver::Proxy.new :http => "#{@outgrader.outgrader_ip}:8888" #TODO remove hardcode port
-    browser_proxy = Watir::Browser.new :firefox, :profile => profile
-    browser_straight = Watir::Browser.new :firefox
-    @results = Hash.new
-    Link.all.map(&:url).each do |url|
-      t1 = Time.now
-      browser_proxy.goto(url)
-      t2 = Time.now
-      browser_straight.goto(url)
-      t3 = Time.now
-      div = browser_proxy.div(id: 'outgrader_button')
-      @results[url]=[(t2-t1).round(2), (t3-t2).round(2), div.exists?]
-    end
-    browser_proxy.close
-    browser_straight.close
-    if not ENV['USER']=='Mikhail'
-      headless.destroy
-    end
-    #@results = {"http://www.kinopoisk.ru/film/5679/"=>[8.46135, 7.246602], "http://films.imhonet.ru/element/189455/"=>[8.393671, 5.261059], "http://www.kinopoisk.ru/film/77331/"=>[4.995837, 33.41228]}
-    @hash = ENV.to_hash
-    #redirect_to outgrader_path, notice: 'Тест запущен'
   end
 
 end

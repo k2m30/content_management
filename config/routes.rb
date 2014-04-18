@@ -14,7 +14,6 @@ ContentManagement::Application.routes.draw do
   get 'outgrader/restart'
   get 'outgrader/kill'
   get 'outgrader/get_config'
-  get 'outgrader/test'
   post 'outgrader/outgrader_change_ip'
   post 'outgrader/redirector_change_ip'
   post 'outgrader/change_config'
