@@ -1,1 +1,8 @@
-$.ajax({type: 'GET', url: 'http://10.74.0.28/outgrader/get_redirect.js?url=' + location.href, dataType: 'script'});
+var httpRequest = new XMLHttpRequest();
+httpRequest.open('get', 'http://localhost:3000/outgrader/get_redirect.js?url=' + location.href);
+//httpRequest.open('get', 'http://redirector.unet.by/outgrader/get_redirect.js?url=' + location.href);
+httpRequest.onreadystatechange = function () {
+    if (httpRequest.readyState != 4 || httpRequest.status != 200) return;
+    console.log('Success: ' + httpRequest.responseText);
+};
+httpRequest.send();

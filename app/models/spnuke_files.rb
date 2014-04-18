@@ -50,6 +50,7 @@ class SpnukeFiles < ActiveRecord::Base
     end
   end
 
+  #187800
   def self.sync_all(start_id = 1)
     files = SpnukeFiles.where('files_id > ?',start_id).where(files_cat_id: SpnukeFiles::CATEGORIES)
     files.each(&:sync)
