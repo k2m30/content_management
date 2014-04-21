@@ -21,8 +21,8 @@ class OutgraderController < ApplicationController
       content = link.present? ? link.content : nil
       @href = content_url(content)
     rescue => e
-      @banner = site.banner.html_safe
-      @href = 'null'
+      @banner = ''
+      @href = nil
     end
     response.headers['Access-Control-Allow-Origin'] = '*'
     render action: :get_redirect, layout: nil

@@ -1,4 +1,7 @@
 var redirector_url = "#{Param.first.redirector_ip}";
-var href = "#{@href}";
+-if @href.present?
+  var href = "#{@href}";
+-else
+  var href = null;
 = @banner
 
