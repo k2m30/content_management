@@ -22,9 +22,12 @@
           - if content.video_files.size > 1
             - sign = 'Выбрать'
             - url = content_path(content)
-          - else
+          - if content.video_files.size == 1
             - sign = 'Скачать'
             - url = content.video_files.first.internal_url
+          - if content.video_files.empty?
+            - sign = 'Посмотреть информацию'
+            - url = content_path(content)
           =link_to sign, url, class: 'btn btn-small btn-info'
         %td= content.video_files.count
         -if user_signed_in?

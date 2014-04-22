@@ -15,19 +15,22 @@ class Site < ActiveRecord::Base
                    'Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.1.5) Gecko/20091112 Iceweasel/3.5.5 (like Firefox/3.5.5; Debian-3.5.5-1)']
 
     html = Nokogiri::HTML open(url, 'User-Agent' => user_agents.sample)
-    name = html.at_css self.year_css
-    year = html.at_css self.year_css
+    name = html.at_css(self.name_css).content
+    year = html.at_css(self.year_css).content
 
     content = Content.text_search("#{name}, #{year}").first
     if content.present?
-      self.links.create(url: url, content: content)
+      self.links.create(url: url, content: content.first)
     else
       content = Content.create(name: "#{name}, #{year}")
       self.links.create(url: url, content: content)
+      `bundle exec rake ts:rebuild RAILS_ENV=#{Rails.env}`
     end
     return content
   rescue => e
-    logger.error [url, e.message, e.backtrace]
+    logger.error url
+    logger.error e.message
+    logger.error e.backtrace[0..3]
     return nil
   end
 end

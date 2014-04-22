@@ -18,7 +18,7 @@ class OutgraderController < ApplicationController
       url+='/' unless url.end_with?('/')
       site = Link.find_site(url)
       if url.match(site.regexp).nil?
-        render nil
+        render text: nil
         return
       end
       link = Link.find_by(url: url)
