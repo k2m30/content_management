@@ -20,7 +20,7 @@ class OutgraderController < ApplicationController
       site = Link.find_site(url)
       content = link.present? ? link.content : site.find_content(url)
       @banner = site.banner.html_safe
-      if content.present? && !content.video_files.empty
+      if content.present? && !content.video_files.empty?
         @href = content_url(content)
       else
         @href = nil
