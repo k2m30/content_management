@@ -17,12 +17,21 @@ class OutgraderController < ApplicationController
       url = params[:url]
       url+='/' unless url.end_with?('/')
       site = Link.find_site(url)
+
       if url.match(site.regexp).nil?
         render text: nil
         return
       end
+
       link = Link.find_by(url: url)
-      content = link.present? ? link.content : site.find_content(url)
+      if link.present?
+        content = link.content
+      elsif site.standard?
+        content = Content.create_with_kinopoisk(url)
+      else
+        content = nil
+      end
+
       @banner = site.banner.html_safe
       if content.present? && !content.video_files.empty?
         @href = content_url(content)

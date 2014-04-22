@@ -11,7 +11,7 @@ class Content < ActiveRecord::Base
     query.present? ? search(query) : all
   end
 
-  def self.create_with_kinopoisk?(link)
+  def self.create_with_kinopoisk(link)
     link+='/' unless link.end_with?('/')
     user_agents = ['Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.146 Safari/537.36',
                    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.73.11 (KHTML, like Gecko) Version/7.0.1 Safari/537.73.11',
@@ -42,16 +42,21 @@ class Content < ActiveRecord::Base
 
     image = "http://www.kinopoisk.ru/images/film/#{link[/\d+/]}.jpg"
 
+    name = html.at_css('title').content
+    year = html.at_css('#infoTable tr:nth-child(1) a').content
+
     content = Link.find_by(url: link).present? ? Link.find_by(url: link).content : Content.new
     content.info = info
     content.rating = rating
     content.description = description
     content.image = image
+    content.name = "#{name}, #{year}"
     content.save
-    sleep rand(1..2)
-    true
+    content.links.create(url: link, site: Site.find_by(name: 'kinopoisk.ru'))
+    `bundle exec rake ts:rebuild RAILS_ENV=#{Rails.env}`
+    return content
   rescue => e
     logger.error [link, e.message, e.backtrace]
-    false
+    nil
   end
 end
