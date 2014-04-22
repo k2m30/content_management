@@ -1,9 +1,13 @@
 = content_for :title, @site.name
 %h3= @site.name
 %p
-  %strong CSS
+  %strong Name CSS Selector
   %br
-  = @site.css
+  = @site.name_css
+%p
+  %strong Year CSS Selector
+  %br
+  = @site.year_css
 %p
   %strong Код баннера
   %br

@@ -4,9 +4,13 @@
     .controls
       = f.text_field :name, :class => 'text_field'
   .control-group
-    = f.label :'CSS', :class => 'control-label'
+    = f.label :'Name CSS selector', :class => 'control-label'
     .controls
-      = f.text_field :css, :class => 'text_field'
+      = f.text_field :name_css, :class => 'text_field'
+  .control-group
+    = f.label :'Year CSS selector', :class => 'control-label'
+    .controls
+      = f.text_field :year_css, :class => 'text_field'
   .control-group
     = f.label 'Код баннера', :class => 'control-label'
     .controls
