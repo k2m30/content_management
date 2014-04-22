@@ -16,8 +16,12 @@ class OutgraderController < ApplicationController
     begin
       url = params[:url]
       url+='/' unless url.end_with?('/')
-      link = Link.find_by(url: url)
       site = Link.find_site(url)
+      if url.match(site.regexp).nil?
+        render nil
+        return
+      end
+      link = Link.find_by(url: url)
       content = link.present? ? link.content : site.find_content(url)
       @banner = site.banner.html_safe
       if content.present? && !content.video_files.empty?
@@ -25,7 +29,7 @@ class OutgraderController < ApplicationController
       else
         @href = nil
       end
-    rescue => e
+    rescue
       @banner = ''
       @href = nil
     end

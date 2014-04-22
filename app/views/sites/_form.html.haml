@@ -12,6 +12,10 @@
     .controls
       = f.text_field :year_css, :class => 'text_field'
   .control-group
+    = f.label :'Regexp', :class => 'control-label'
+    .controls
+      = f.text_field :regexp, :class => 'text_field'
+  .control-group
     = f.label 'Код баннера', :class => 'control-label'
     .controls
       = f.text_area :banner, :class => 'text_area span8', rows:20
