@@ -34,21 +34,9 @@ group :doc do
   gem 'sdoc', require: false
 end
 
-# Use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.1.2'
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Use Capistrano for deployment
-# gem 'capistrano', group: :development
-
-# Use debugger
-# gem 'debugger', group: [:development, :test]
-
 gem 'tail'
 gem 'lograge'
-gem 'faker'
+
 gem 'watir-webdriver'
 gem 'headless'
 
@@ -60,10 +48,11 @@ gem 'twitter-bootstrap-rails'
 gem 'haml-rails'
 gem 'haml'
 
-gem 'pg_search'
+#gem 'pg_search'
 gem 'will_paginate'
 
 group :development do
+  gem 'faker'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'letter_opener'
@@ -77,3 +66,4 @@ gem 'capistrano', '~> 2.15'
 gem 'unicorn'
 
 gem 'nokogiri'
+gem 'thinking-sphinx', '~> 3.1.1'

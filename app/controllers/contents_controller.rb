@@ -1,3 +1,5 @@
+require 'will_paginate/array'
+
 class ContentsController < ApplicationController
   before_filter :authenticate_user!, except: [:index, :show]
   before_action :set_content, only: [:show, :edit, :update, :destroy, :add_link]
@@ -5,7 +7,7 @@ class ContentsController < ApplicationController
   # GET /contents
   # GET /contents.json
   def index
-    @contents = Content.text_search(params[:query]).order(:name).paginate(page: params[:page], per_page: 30)
+    @contents = Content.text_search(params[:query]).sort_by(&:name).paginate(page: params[:page], per_page: 30)
   end
 
   # GET /contents/1

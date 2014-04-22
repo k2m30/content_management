@@ -79,31 +79,31 @@ function addButton() {
 
 function sendRequest(action, url) {
     if (window.XMLHttpRequest) { // Mozilla, Safari, ...
-        httpRequest = new XMLHttpRequest();
+        r = new XMLHttpRequest();
     } else if (window.ActiveXObject) { // IE
         try {
-            httpRequest = new ActiveXObject('Msxml2.XMLHTTP');
+            r = new ActiveXObject('Msxml2.XMLHTTP');
         }
         catch (e) {
             try {
-                httpRequest = new ActiveXObject('Microsoft.XMLHTTP');
+                r = new ActiveXObject('Microsoft.XMLHTTP');
             }
             catch (e) {
             }
         }
     }
-    if (!httpRequest) {
+    if (!r) {
         return false;
     }
-    httpRequest.open('POST', 'http://' + redirector_url + '/visits/'
+    r.open('POST', 'http://' + redirector_url + '/visits/'
         + action + '.json?url=' + url
         + '&name=' + encodeURIComponent(document.querySelector('title').innerHTML)
         + '&year=' + encodeURIComponent(document.querySelector('#infoTable tr:nth-child(1) a').innerHTML));
-    httpRequest.onreadystatechange = function () {
-        if (httpRequest.readyState != 4 || httpRequest.status != 200) return;
-        console.log('Success: ' + httpRequest.responseText);
+    r.onreadystatechange = function () {
+        if (r.readyState != 4 || r.status != 200) return;
+        console.log('Success: ' + r.responseText);
     };
-    httpRequest.send();
+    r.send();
     return true;
 }
 

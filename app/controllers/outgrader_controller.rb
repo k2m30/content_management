@@ -6,6 +6,7 @@ require 'headless'
 
 class OutgraderController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:get_redirect]
+
   def initialize
     @outgrader = Param.first || Param.create
     super
@@ -17,9 +18,13 @@ class OutgraderController < ApplicationController
       url+='/' unless url.end_with?('/')
       link = Link.find_by(url: url)
       site = Link.find_site(url)
+      content = link.present? ? link.content : site.find_content(url)
       @banner = site.banner.html_safe
-      content = link.present? ? link.content : nil
-      @href = content_url(content)
+      if content.present? && !content.video_files.empty
+        @href = content_url(content)
+      else
+        @href = nil
+      end
     rescue => e
       @banner = ''
       @href = nil
@@ -114,7 +119,7 @@ class OutgraderController < ApplicationController
       f.close
 
       old_url = redirect_js[/http:\/\/.*\..{2,3}\//]
-      redirect_js = redirect_js.gsub(old_url,"http://#{@outgrader.redirector_ip}/")
+      redirect_js = redirect_js.gsub(old_url, "http://#{@outgrader.redirector_ip}/")
 
       f = File.open('./public/redirector.js', 'w+')
       f.write(redirect_js)

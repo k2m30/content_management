@@ -7,9 +7,6 @@ class Content < ActiveRecord::Base
   has_many :video_files, dependent: :destroy
   validates :name, presence: true
 
-  include PgSearch
-  pg_search_scope :search, against: [:name], using: {tsearch: {dictionary: :russian}}
-
   def self.text_search(query)
     query.present? ? search(query) : all
   end
@@ -43,7 +40,7 @@ class Content < ActiveRecord::Base
     description = html.at_css('._reachbanner_ .brand_words')
     description = description.to_html.encode('utf-8') if description.present?
 
-    image = 'http://www.kinopoisk.ru/images/film/' + link[/\d+/] + '.jpg'
+    image = "http://www.kinopoisk.ru/images/film/#{link[/\d+/]}.jpg"
 
     content = Link.find_by(url: link).present? ? Link.find_by(url: link).content : Content.new
     content.info = info
