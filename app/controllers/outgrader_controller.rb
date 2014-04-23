@@ -18,18 +18,17 @@ class OutgraderController < ApplicationController
       url+='/' unless url.end_with?('/')
       site = Link.find_site(url)
 
-      if url.match(site.regexp).nil?
+      if site.nil? || url.match(site.regexp).nil?
         render text: nil
         return
       end
 
       link = Link.find_by(url: url)
+      content = nil
       if link.present?
         content = link.content
-      elsif site.standard?
-        content = Content.create_with_kinopoisk(url)
       else
-        content = nil
+        content = site.standard? ? Content.create_with_kinopoisk(url) : Content.find_content(url, site)
       end
 
       @banner = site.banner.html_safe

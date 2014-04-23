@@ -7,20 +7,39 @@ class Content < ActiveRecord::Base
   has_many :video_files, dependent: :destroy
   validates :name, presence: true
 
+  USER_AGENTS = ['Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.146 Safari/537.36',
+                 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.73.11 (KHTML, like Gecko) Version/7.0.1 Safari/537.73.11',
+                 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.102 Safari/537.36 OPR/19.0.1326.59',
+                 'Opera/9.80 (Windows NT 5.1; U; en) Presto/2.2.15 Version/10.10',
+                 'Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.1.5) Gecko/20091112 Iceweasel/3.5.5 (like Firefox/3.5.5; Debian-3.5.5-1)']
+
+
   def self.text_search(query)
     query.present? ? search(query) : all
   end
 
+  def self.find_content(url, site)
+    url+='/' unless url.end_with?('/')
+
+    html = Nokogiri::HTML open(url, 'User-Agent' => Content::USER_AGENTS.sample)
+    name = html.at_css(site.name_css).content
+    year = html.at_css(site.year_css).content
+
+    content = Content.text_search("#{name}, #{year}").first
+    site.links.create(url: url, content: content) if content.present?
+
+    return content
+  rescue => e
+    logger.error url
+    logger.error e.message
+    logger.error e.backtrace[0..3]
+    return nil
+  end
+
   def self.create_with_kinopoisk(link)
     link+='/' unless link.end_with?('/')
-    user_agents = ['Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.146 Safari/537.36',
-                   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.73.11 (KHTML, like Gecko) Version/7.0.1 Safari/537.73.11',
-                   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.102 Safari/537.36 OPR/19.0.1326.59',
-                   'Opera/9.80 (Windows NT 5.1; U; en) Presto/2.2.15 Version/10.10',
-                   'Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.1.5) Gecko/20091112 Iceweasel/3.5.5 (like Firefox/3.5.5; Debian-3.5.5-1)']
 
-
-    html = Nokogiri::HTML open(link, 'User-Agent' => user_agents.sample)
+    html = Nokogiri::HTML open(link, 'User-Agent' => Content::USER_AGENTS.sample)
     info = html.at_css('.info')
     info.css('a').each do |a|
       a[:href] = 'http://www.kinopoisk.ru' + a[:href] if a[:href].present? && a[:href].start_with?('/')
