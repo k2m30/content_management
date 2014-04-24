@@ -1,7 +1,7 @@
 \-
-= @_request["HTTP_REFERER"]
+= pp @_request.env["HTTP_REFERER"]
 \-
-= pp @request["HTTP_REFERER"]
+= @_request.env.to_s.html_safe
 \-
 =pp @_request.inspect.html_safe
 var redirector_url = "#{Param.first.redirector_ip}";
