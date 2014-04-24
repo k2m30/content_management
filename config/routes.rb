@@ -8,7 +8,7 @@ ContentManagement::Application.routes.draw do
   devise_for :users
 
   get 'redirector', to: 'outgrader#get_redirect', format: 'js'
-  get 'outgrader/get_redirect'
+  #get 'outgrader/get_redirect'
   get 'outgrader' => 'outgrader#index'
   get 'outgrader/start'
   get 'outgrader/stop'

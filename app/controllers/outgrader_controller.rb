@@ -126,17 +126,6 @@ class OutgraderController < ApplicationController
   def redirector_change_ip
     begin
       @outgrader.update(redirector_ip: params[:ip].gsub('http://', ''))
-
-      f = File.open('./public/red.js')
-      redirect_js = f.read
-      f.close
-
-      old_url = redirect_js[/http:\/\/.*\..{2,3}\//]
-      redirect_js = redirect_js.gsub(old_url, "http://#{@outgrader.redirector_ip}/")
-
-      f = File.open('./public/red.js', 'w+')
-      f.write(redirect_js)
-      f.close
     rescue
       redirect_to outgrader_path, alert: 'Ошибка изменения адреса'
     end
