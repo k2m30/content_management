@@ -1,16 +1,18 @@
-var httpRequest;
+var name_css = 'title';
+var year_css = '#infoTable tr:nth-child(1) a';
+var r;
 document.onreadystatechange = function () {
     if (document.readyState == 'interactive') {
-        if (href != null) addButton();
-        sendVisit(location.href);
+        executeIt();
     }
 }
+if (((document.readyState == 'complete') || (document.readyState == 'interactive') ) && !isExecuted) executeIt();
 
 function createOutgraderButton(href) {
     var outgrader_button = document.getElementById('outgrader');
     outgrader_button.innerHTML = '<a class="outgrader_button" target="_blank" href="' + href + '">Скачайте этот файл в сети провайдера</a>';
     outgrader_button.onclick = function () {
-        sendClick(location.href);
+        sendClick(location.href, name_css, year_css);
     };
 }
 
@@ -75,42 +77,4 @@ function addButton() {
     head.appendChild(style);
 
     createOutgraderButton(href);
-}
-
-function sendRequest(action, url) {
-    if (window.XMLHttpRequest) { // Mozilla, Safari, ...
-        r = new XMLHttpRequest();
-    } else if (window.ActiveXObject) { // IE
-        try {
-            r = new ActiveXObject('Msxml2.XMLHTTP');
-        }
-        catch (e) {
-            try {
-                r = new ActiveXObject('Microsoft.XMLHTTP');
-            }
-            catch (e) {
-            }
-        }
-    }
-    if (!r) {
-        return false;
-    }
-    r.open('POST', 'http://' + redirector_url + '/visits/'
-        + action + '.json?url=' + url
-        + '&name=' + encodeURIComponent(document.querySelector('title').innerHTML)
-        + '&year=' + encodeURIComponent(document.querySelector('#infoTable tr:nth-child(1) a').innerHTML));
-    r.onreadystatechange = function () {
-        if (r.readyState != 4 || r.status != 200) return;
-        console.log('Success: ' + r.responseText);
-    };
-    r.send();
-    return true;
-}
-
-function sendClick(url) {
-    sendRequest('send_click', url)
-}
-
-function sendVisit(url) {
-    sendRequest('send_visit', url)
 }
