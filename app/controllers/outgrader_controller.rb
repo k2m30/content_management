@@ -14,7 +14,7 @@ class OutgraderController < ApplicationController
 
   def get_redirect
     begin
-      url = params[:url]
+      url = @_request.env["HTTP_REFERER"]
       url+='/' unless url.end_with?('/')
       site = Link.find_site(url)
 

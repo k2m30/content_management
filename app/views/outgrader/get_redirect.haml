@@ -1,9 +1,3 @@
-\-
-= pp @_request.env["HTTP_REFERER"]
-\-
-= @_request.env.to_s.html_safe
-\-
-=pp @_request.inspect.html_safe
 var redirector_url = "#{Param.first.redirector_ip}";
 -if @site.present?
   var name_css = "#{@site.name_css}";
