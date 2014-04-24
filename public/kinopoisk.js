@@ -3,7 +3,7 @@ var year_css = '#infoTable tr:nth-child(1) a';
 var r;
 document.onreadystatechange = function () {
     if (document.readyState == 'interactive') {
-        executeIt(href);
+        executeIt();
     }
 }
 if (((document.readyState == 'complete') || (document.readyState == 'interactive') ) && !isExecuted) executeIt();

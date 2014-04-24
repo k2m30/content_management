@@ -7,6 +7,7 @@ ContentManagement::Application.routes.draw do
   get "stats/results"
   devise_for :users
 
+  get 'redirector', to: 'outgrader#get_redirect', format: 'js'
   get 'outgrader/get_redirect'
   get 'outgrader' => 'outgrader#index'
   get 'outgrader/start'
@@ -29,7 +30,7 @@ ContentManagement::Application.routes.draw do
   get 'visits/torrents'
 
 
-  mount Tail::Engine, at: "/tail"
+  mount Tail::Engine, at: '/tail'
 
   resources :sites
 

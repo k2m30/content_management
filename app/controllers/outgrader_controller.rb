@@ -31,16 +31,17 @@ class OutgraderController < ApplicationController
         content = site.standard? ? Content.create_with_kinopoisk(url) : Content.find_content(url, site)
       end
 
-      @banner = site.banner.html_safe
+      @site = site
       if content.present? && !content.video_files.empty?
         @href = content_url(content)
       else
         @href = nil
       end
     rescue
-      @banner = ''
+      @site = nil
       @href = nil
     end
+    @request = request
     response.headers['Access-Control-Allow-Origin'] = '*'
     render action: :get_redirect, layout: nil
   end

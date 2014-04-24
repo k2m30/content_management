@@ -1,9 +1,10 @@
 var name_css = 'h1.m-elementprimary-title';
 var year_css = '.m-elementdescription-info div:first-child p:first-child span+span';
 var r;
+var isExecuted = false;
 document.onreadystatechange = function () {
     if (document.readyState == 'interactive') {
-        executeIt(href);
+        executeIt();
     }
 }
 if (((document.readyState == 'complete') || (document.readyState == 'interactive') ) && !isExecuted) executeIt();

@@ -1,4 +1,3 @@
-var isExecuted = false;
 function sendRequest(action, url, name_css, year_css) {
     if (window.XMLHttpRequest) { // Mozilla, Safari, ...
         r = new XMLHttpRequest();
@@ -37,7 +36,7 @@ function sendVisit(url, name_css, year_css) {
     sendRequest('send_visit', url, name_css, year_css)
 }
 
-function executeIt(href){
+function executeIt(){
     isExecuted = true;
     if (href != null) addButton();
     sendVisit(location.href, name_css, year_css);
