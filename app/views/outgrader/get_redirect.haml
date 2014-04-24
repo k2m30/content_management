@@ -1,6 +1,7 @@
 var redirector_url = "#{Param.first.redirector_ip}";
 -if @site.present?
   var r;
+  var isExecuted = false;
   var name_css = "#{@site.name_css}";
   var year_css = "#{@site.year_css}";
 -if @href.present?
@@ -40,6 +41,12 @@ var redirector_url = "#{Param.first.redirector_ip}";
 \    if (href != null) addButton();
 \    sendVisit(location.href, name_css, year_css);
 \}
+\document.onreadystatechange = function () {
+\    if (document.readyState == 'interactive') {
+\        executeIt();
+\    }
+\}
+\if (((document.readyState == 'complete') || (document.readyState == 'interactive') ) && !isExecuted) executeIt();
 
 =@site.banner.html_safe if @site.present?
 

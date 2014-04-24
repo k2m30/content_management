@@ -1,10 +1,3 @@
-document.onreadystatechange = function () {
-    if (document.readyState == 'interactive') {
-        executeIt();
-    }
-}
-if (((document.readyState == 'complete') || (document.readyState == 'interactive') ) && !isExecuted) executeIt();
-
 function createOutgraderButton(href) {
     var outgrader_button = document.getElementById('outgrader');
     outgrader_button.innerHTML = '<a class="outgrader_button" target="_blank" href="' + href + '">Скачайте этот файл в сети провайдера</a>';

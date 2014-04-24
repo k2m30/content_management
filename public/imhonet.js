@@ -1,14 +1,3 @@
-var name_css = 'h1.m-elementprimary-title';
-var year_css = '.m-elementdescription-info div:first-child p:first-child span+span';
-var r;
-var isExecuted = false;
-document.onreadystatechange = function () {
-    if (document.readyState == 'interactive') {
-        executeIt();
-    }
-}
-if (((document.readyState == 'complete') || (document.readyState == 'interactive') ) && !isExecuted) executeIt();
-
 function addButton() {
     var original_button = document.querySelectorAll('a.btn.use-way.btn-inverse.btn-theme.is-masked')[1];
     var outgrader_button = document.createElement('a');
