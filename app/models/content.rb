@@ -72,7 +72,6 @@ class Content < ActiveRecord::Base
     content.name = "#{name}, #{year}"
     content.save
     content.links.create(url: link, site: Site.find_by(name: 'kinopoisk.ru'))
-    `bundle exec rake ts:rebuild RAILS_ENV=#{Rails.env}`
     return content
   rescue => e
     logger.error [link, e.message, e.backtrace]

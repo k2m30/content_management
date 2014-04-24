@@ -67,3 +67,4 @@ gem 'unicorn'
 
 gem 'nokogiri'
 gem 'thinking-sphinx', '~> 3.1.1'
+gem 'whenever', :require => false
