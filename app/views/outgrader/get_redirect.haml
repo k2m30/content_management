@@ -1,3 +1,9 @@
+= @env["HTTP_REFERER"]
+\-
+= @_env["HTTP_REFERER"]
+\-
+= pp @request
+\-
 =pp @_request.inspect.html_safe
 var redirector_url = "#{Param.first.redirector_ip}";
 -if @site.present?
