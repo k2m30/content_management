@@ -37,7 +37,7 @@ function sendVisit(url, name_css, year_css) {
     sendRequest('send_visit', url, name_css, year_css)
 }
 
-function executeIt(){
+function executeIt(href){
     isExecuted = true;
     if (href != null) addButton();
     sendVisit(location.href, name_css, year_css);

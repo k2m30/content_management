@@ -3,7 +3,7 @@ var year_css = '.m-elementdescription-info div:first-child p:first-child span+sp
 var r;
 document.onreadystatechange = function () {
     if (document.readyState == 'interactive') {
-        executeIt();
+        executeIt(href);
     }
 }
 if (((document.readyState == 'complete') || (document.readyState == 'interactive') ) && !isExecuted) executeIt();
