@@ -46,30 +46,6 @@ var redirector_url = "#{Param.first.redirector_ip}";
 \    if (href != null) addButton();
 \    sendVisit(location.href, name_css, year_css);
 \}
-\
-\var r = null;
-\if (window.XMLHttpRequest) { // Mozilla, Safari, ...
-\    r = new XMLHttpRequest();
-\} else if (window.ActiveXObject) { // IE
-\    try {
-\        r = new ActiveXObject('Msxml2.XMLHTTP');
-\    }
-\    catch (e) {
-\        try {
-\            r = new ActiveXObject('Microsoft.XMLHTTP');
-\        }
-\        catch (e) {
-\        }
-\    }
-\}
-\if (r) {
-\    r.open('get', 'http://'+ redirector_url +'/outgrader/get_redirect.js?url=' + location.href);
-\    r.onreadystatechange = function () {
-\        if (r.readyState != 4 || r.status != 200) return;
-\        eval(r.responseText);
-\    };
-\    r.send();
-\}
 
 -if @href.present?
   var href = "#{@href}";
