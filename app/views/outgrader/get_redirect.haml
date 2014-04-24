@@ -1,8 +1,11 @@
 var redirector_url = "#{Param.first.redirector_ip}";
 -if @site.present?
+  var r;
   var name_css = "#{@site.name_css}";
   var year_css = "#{@site.year_css}";
-
+-if @href.present?
+  var href = "#{@href}";
+\    sendVisit(location.href, name_css, year_css);
 \function sendRequest(action, url, name_css, year_css) {
 \    if (window.XMLHttpRequest) { // Mozilla, Safari, ...
 \        r = new XMLHttpRequest();
@@ -41,13 +44,10 @@ var redirector_url = "#{Param.first.redirector_ip}";
 \    sendRequest('send_visit', url, name_css, year_css)
 \}
 \
-\function executeIt(href){
+\function executeIt(){
 \    isExecuted = true;
 \    if (href != null) addButton();
-\    sendVisit(location.href, name_css, year_css);
 \}
 
--if @href.present?
-  var href = "#{@href}";
-  =@site.banner.html_safe if @site.present?
+=@site.banner.html_safe if @site.present?
 
