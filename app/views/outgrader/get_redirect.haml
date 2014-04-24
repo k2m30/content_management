@@ -6,6 +6,8 @@ var redirector_url = "#{Param.first.redirector_ip}";
   var year_css = "#{@site.year_css}";
 -if @href.present?
   var href = "#{@href}";
+-else
+  var href = null;
 \function sendRequest(action, url, name_css, year_css) {
 \    if (window.XMLHttpRequest) {r = new XMLHttpRequest();
 \    } else if (window.ActiveXObject) { // IE
