@@ -5,7 +5,6 @@ var redirector_url = "#{Param.first.redirector_ip}";
   var year_css = "#{@site.year_css}";
 -if @href.present?
   var href = "#{@href}";
-\    sendVisit(location.href, name_css, year_css);
 \function sendRequest(action, url, name_css, year_css) {
 \    if (window.XMLHttpRequest) { // Mozilla, Safari, ...
 \        r = new XMLHttpRequest();
@@ -47,6 +46,7 @@ var redirector_url = "#{Param.first.redirector_ip}";
 \function executeIt(){
 \    isExecuted = true;
 \    if (href != null) addButton();
+\    sendVisit(location.href, name_css, year_css);
 \}
 
 =@site.banner.html_safe if @site.present?
